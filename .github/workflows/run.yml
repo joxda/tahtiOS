@@ -14,10 +14,6 @@ jobs:
       versionINDI3rdPARTY: ${{ steps.fetch_tags.outputs.indi-3rdparty }}
       
     steps:
-      - name: Def Repos
-        run: |
-          REPOS=("indilib/indi" "indilib/indi-3rdparty")
-          echo "repos=${REPOS[*]}" >> $GITHUB_ENV
       - name: Restore
         id: cache_release
         uses: actions/cache@v3
@@ -28,6 +24,12 @@ jobs:
       - name: Fetch latest tags
         id: fetch_tags
         run: |
+          REPOS=("indilib/indi" "indilib/indi-3rdparty")
+          echo "repos=${REPOS[*]}" >> $GITHUB_ENV
+          if [ ! -f last_releases.json ]; then
+            echo "{}" > last_releases.json
+          fi
+          
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
           for repo in ${{ env.repos }}; do
