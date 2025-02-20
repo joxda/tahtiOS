@@ -15,11 +15,11 @@ jobs:
       versionINDI3rdPARTY: ${{ steps.indi3rd_ver.outputs.result }}
       
     steps:
-      - uses: mogeko/latest-version@v1
+      - uses: mogeko/latest-version@v1.1.2
         id: indi_ver
         with:
           repo: indilib/indi
-      - uses: mogeko/latest-version@v1
+      - uses: mogeko/latest-version@v1.1.2
         id: indi3rd_ver
         with:
           repo: indilib/indi-3rdparty
