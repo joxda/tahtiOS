@@ -55,7 +55,7 @@ jobs:
           
           echo "}" >> new_releases.json
           cat new_releases.json
-          echo "needs_update=$NEEDS_UPDATE" >> GITHUB_ENV
+          echo "needs_update=$NEEDS_UPDATE" >> $GITHUB_ENV
           if [ "$NEEDS_UPDATE" = "true" ]; then
             echo "Caching..."
             mv new_releases.json latest_releases.json
