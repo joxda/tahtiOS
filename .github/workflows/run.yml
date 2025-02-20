@@ -36,7 +36,7 @@ jobs:
             LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/releases/latest | jq -r .tag_name)
             PREVIOUS_TAG=$(jq -r --arg repo "$repo" '.[$repo] // empty' last_releases.json)
             echo "${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
-            echo "Previous release for $repo: $PREVIOUS_TAG"
+            echo "Previous release for $repo(${repo#*/}): $PREVIOUS_TAG"
             if [ "$LATEST_TAG" != "$PREVIOUS_TAG" ]; then
               echo "New release detected for $repo"
               NEEDS_UPDATE=true
@@ -45,7 +45,7 @@ jobs:
           done
           
           echo "}" >> new_releases.json
-          
+          cat new_releases.json
           echo "needs_update=$NEEDS_UPDATE" >> GITHUB_ENV
           if [ $NEEDS_UPDATE ]; then
             echo "Caching..."
