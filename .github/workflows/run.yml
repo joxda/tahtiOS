@@ -10,8 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     
     outputs:
-      versionINDI: ${{ steps.fetch_tag.outputs.indilib/indi }}
-      versionINDI3rdPARTY: ${{ steps.fetch_tags.outputs.indilib/indi-3rdparty }}
+      versionINDI: ${{ steps.fetch_tag.outputs.indi }}
+      versionINDI3rdPARTY: ${{ steps.fetch_tags.outputs.indi-3rdparty }}
       
     steps:
       - name: Def Repos
@@ -32,7 +32,7 @@ jobs:
           NEEDS_UPDATE=false
           for repo in ${{ env.repos }}; do
             LATEST_TAG =$(jq -r --arg repo "$repo" '.[$repo] // empty' last_releases.json)
-            echo "$repo=$LATEST_TAG" >> $GITHUB_OUTPUT
+            echo "${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
             echo "Previous release for $repo: $PREVIOUS_TAG"
             if [ "$LATEST_TAG" != "$PREVIOUS_TAG" ]; then
               echo "New release detected for $repo"
