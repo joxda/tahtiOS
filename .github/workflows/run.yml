@@ -1,0 +1,35 @@
+on:
+  schedule:
+    - cron: "30 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Check Version
+    runs-on: ubuntu-latest
+    outputs:
+      updatedINDI: ${{ steps.indi_ver.outputs.is_update }}
+      versionINDI: ${{ steps.indi_ver.outputs.result }}
+      updatedINDI3rdPARTY: ${{ steps.indi3rd_ver.outputs.is_update }}
+      versionINDI3rdPARTY: ${{ steps.indi3rd_ver.outputs.result }}
+      
+    steps:
+      - uses: mogeko/latest-version@v1
+        id: indi_ver
+        with:
+          repo: indilib/indi
+      - uses: mogeko/latest-version@v1
+        id: indi3rd_ver
+        with:
+          repo: indilib/indi-3rdparty
+
+  print:
+    name: Print the result from check
+    runs-on: ubuntu-latest
+    needs: check
+    steps:
+      - run: |
+          echo '${{ needs.check.outputs.updateINDI }}'
+          echo '${{ needs.check.outputs.versionINDI }}' | jq '.'
+          echo '${{ needs.check.outputs.updateINDI3rdPARTY }}'
+          echo '${{ needs.check.outputs.versionINDI3rdPARTY }}'
