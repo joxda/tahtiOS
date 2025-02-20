@@ -24,6 +24,9 @@ jobs:
       - name: Fetch latest tags
         id: fetch_tags
         run: |
+          if [ -f latest_releases.json ]; then
+            cat latest_releases.json
+          fi
           REPOS=("indilib/indi" "indilib/indi-3rdparty")
           echo "repos=${REPOS[*]}" >> $GITHUB_ENV
           if [ ! -f last_releases.json ]; then
