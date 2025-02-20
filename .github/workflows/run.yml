@@ -46,7 +46,6 @@ jobs:
           
           echo "}" >> new_releases.json
           
-          cat new_releases
           echo "needs_update=$NEEDS_UPDATE" >> GITHUB_ENV
           if [ $NEEDS_UPDATE ]; then
             echo "Caching..."
