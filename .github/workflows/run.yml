@@ -19,8 +19,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: latest_releases.json
-          key: release-tags
-          restore-key: release-tags
+          key: release-tags-${{ github.run_id }}
+          restore-keys: release-tags-
       - name: Fetch latest tags
         id: fetch_tags
         run: |
