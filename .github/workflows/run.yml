@@ -55,24 +55,25 @@ jobs:
             mv new_releases.json latest_releases.json
             echo "YES"
             cat latest_releases.json
+            
           fi
       - name: Store
         id: cache_release
-        if: env.needs_update == 'true'
         uses: actions/cache/save@v4
         with:
           path: latest_releases.json
           key: release-tags
-      - name: do stuff
-        if: env.needs_update == 'true'
-        run: |
-          echo "UPDATE"
+      
 
   print:
     name: Print the result from check
     runs-on: ubuntu-latest
     needs: check
     steps:
+      - name: do stuff
+        if: env.needs_update == 'true'
+        run: |
+          echo "UPDATE"
       - run: |
           echo '${{ needs.check.outputs.versionINDI }}'
           echo '${{ needs.check.outputs.versionINDI3rdPARTY }}'
