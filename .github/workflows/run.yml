@@ -8,21 +8,52 @@ jobs:
   check:
     name: Check Version
     runs-on: ubuntu-latest
+    
     outputs:
-      updatedINDI: ${{ steps.indi_ver.outputs.is_update }}
-      versionINDI: ${{ steps.indi_ver.outputs.result }}
-      updatedINDI3rdPARTY: ${{ steps.indi3rd_ver.outputs.is_update }}
-      versionINDI3rdPARTY: ${{ steps.indi3rd_ver.outputs.result }}
+      versionINDI: ${{ steps.fetch_tag.outputs.indilib/indi }}
+      versionINDI3rdPARTY: ${{ steps.fetch_tags.outputs.indilib/indi-3rdparty }}
       
     steps:
-      - uses: mogeko/latest-version@v1.1.2
-        id: indi_ver
+      - name: Def Repos
+        run: |
+          REPOS=("indilib/indi" "indilib/indi-3rdparty")
+          echo "repos=${REPOS[*]} >> $GITHUB_ENV
+      - name: Restore
+        id: cache_release
+        uses: actions/cache@v3
         with:
-          repo: indilib/indi
-      - uses: mogeko/latest-version@v1.1.2
-        id: indi3rd_ver
-        with:
-          repo: indilib/indi-3rdparty
+          path: latest_releases.json
+          key: release-tags
+          restore-keys: release-tags
+      - name: Fetch latest tags
+        id: fetch_tags
+        run: |
+          echo "{" > new_releases.json
+          NEEDS_UPDATE=false
+          for repo in ${{ env.repos }}; do
+            LATEST_TAG =$(jq -r --arg repo "$repo" '.[$repo] // empty' last_releases.json)
+            echo "$repo=$LATEST_TAG" >> $GITHUB_OUTPUT
+            echo "Previous release for $repo: $PREVIOUS_TAG"
+            if [ "$LATEST_TAG" != "$PREVIOUS_TAG" ]; then
+              echo "New release detected for $repo"
+              NEEDS_UPDATE=true
+            fi
+            echo "\"$repo\": \"$LATEST_TAG\"," >> new_releases.json
+          done
+          
+          echo "}" >> new_releases.json
+          
+          cat new_releases
+          echo "needs_update=$NEEDS_UPDATE" >> GITHUB_ENV
+          if [ $NEEDS_UPDATE ]; then
+            echo "Caching..."
+            mv new_releases.json latest_releases.json
+          fi
+
+      - name: do stuff
+        if: env.needs_update == 'true'
+        run: |
+          echo "UPDATE"
 
   print:
     name: Print the result from check
@@ -30,7 +61,5 @@ jobs:
     needs: check
     steps:
       - run: |
-          echo '${{ needs.check.outputs.updateINDI }}'
-          echo '${{ needs.check.outputs.versionINDI }}' | jq '.'
-          echo '${{ needs.check.outputs.updateINDI3rdPARTY }}'
+          echo '${{ needs.check.outputs.versionINDI }}'
           echo '${{ needs.check.outputs.versionINDI3rdPARTY }}'
