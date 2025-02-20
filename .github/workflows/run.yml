@@ -32,7 +32,7 @@ jobs:
           
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
-          for repo in $repos; do
+          for repo in ${REPOS[*]}; do
             LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/releases/latest | jq -r .tag_name)
             PREVIOUS_TAG=$(jq -r --arg repo "$repo" '.[$repo] // empty' last_releases.json)
             echo "${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
