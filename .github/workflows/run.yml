@@ -17,7 +17,7 @@ jobs:
       - name: Def Repos
         run: |
           REPOS=("indilib/indi" "indilib/indi-3rdparty")
-          echo "repos=${REPOS[*]} >> $GITHUB_ENV
+          echo "repos=${REPOS[*]}" >> $GITHUB_ENV
       - name: Restore
         id: cache_release
         uses: actions/cache@v3
@@ -31,7 +31,8 @@ jobs:
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
           for repo in ${{ env.repos }}; do
-            LATEST_TAG =$(jq -r --arg repo "$repo" '.[$repo] // empty' last_releases.json)
+            LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/releases/latest | jq -r .tag_name)
+            PREVIOUS_TAG=$(jq -r --arg repo "$repo" '.[$repo] // empty' last_releases.json)
             echo "${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
             echo "Previous release for $repo: $PREVIOUS_TAG"
             if [ "$LATEST_TAG" != "$PREVIOUS_TAG" ]; then
