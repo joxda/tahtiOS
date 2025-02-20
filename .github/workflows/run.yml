@@ -42,7 +42,7 @@ jobs:
             fi
             RAN=true
             LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/releases/latest | jq -r .tag_name)
-            PREVIOUS_TAG=$(jq -r --arg rep "$repo" '.[$rep] // ""' last_releases.json)
+            PREVIOUS_TAG=$(jq -r --arg rep "$repo" '.[$rep] // ""' latest_releases.json)
             echo "${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
             echo "${repo#*/}=$LATEST_TAG"
             echo "Previous release for $repo(${repo#*/}): $PREVIOUS_TAG"
