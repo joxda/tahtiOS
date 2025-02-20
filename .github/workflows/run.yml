@@ -35,7 +35,12 @@ jobs:
           
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
+          RAN=false
           for repo in ${REPOS[*]}; do
+            if [ "$RAN" = "true" ]; then
+              echo "," >> new_releases.json
+            fi
+            RAN=true
             LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/releases/latest | jq -r .tag_name)
             PREVIOUS_TAG=$(jq -r --arg rep "$repo" '.[$rep] // ""' last_releases.json)
             echo "${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
@@ -45,7 +50,7 @@ jobs:
               echo "New release detected for $repo"
               NEEDS_UPDATE=true
             fi
-            echo "\"$repo\": \"$LATEST_TAG\"," >> new_releases.json
+            echo "\"$repo\": \"$LATEST_TAG\"" >> new_releases.json
           done
           
           echo "}" >> new_releases.json
