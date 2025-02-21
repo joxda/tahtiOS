@@ -27,7 +27,7 @@ jobs:
         run: |
           REPOS=("indilib/indi" "indilib/indi-3rdparty")
           echo "repos=${REPOS[*]}" >> $GITHUB_ENV
-          echo "" > latest_releases.json
+          
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
           RAN=false
