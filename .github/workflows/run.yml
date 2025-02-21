@@ -62,11 +62,39 @@ jobs:
             mv new_releases.json latest_releases.json            
           fi
 
-  print:
+
+
+  dothings:
     name: Print the result from check
     runs-on: ubuntu-latest
     needs: check
     steps:
+      - name: Pi Image
+        id: latestImage
+        run: | 
+          LATEST_VERSION=$(curl -s https://downloads.raspberrypi.com/raspios_arm64/images/ | grep -oP '(?<=href=")[^"]+(?=")' | sort | tail -n 1)
+          echo "LATEST_VERSION=${LATEST_VERSION}" >> $GITHUB_ENV
+          echo "Cache Key: raspios-${LATEST_VERSION}"
+      - name: Restore
+        id: cache-restore 
+        uses: actions/cache/restore@v4 
+        with: 
+          path: raspios_arm64-latest.img.xz 
+          key: raspios-${{ env.LATEST_VERSION }} 
+          restore-keys: raspios- 
+      - name: DownloadImage
+        if: steps.cache-restore.outputs.cache-hit != 'true' 
+        run: | 
+          LATEST_DIR="https://downloads.raspberrypi.com/raspios_arm64/images/${LATEST_VERSION}"
+          LATEST_FILE=$(curl -s "$LATEST_DIR" | grep -oP '(?<=href=")[^"]+\.img\.xz(?=)' | head -n 1)
+          DOWNLOAD_URL=${LATEST_DIR}${LATEST_FILE}
+          wget -O raspios_arm64-latest.img.xz "$DOWNLOAD_URL" 
+      - name: Save to Cache 
+        if: steps.cache-restore.outputs.cache-hit != 'true' 
+        uses: actions/cache/save@v4 
+          with:
+            path: raspios_arm64-latest.img.xz
+            key: raspios-${{env.LATEST_VERSION }} 
       - name: do stuff
         if: needs.check.outputs.needs_update == 'true'
         run: |
