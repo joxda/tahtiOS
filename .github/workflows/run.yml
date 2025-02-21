@@ -12,7 +12,7 @@ jobs:
     outputs:
       versionINDI: ${{ steps.fetch_tags.outputs.indi }}
       versionINDI3rdPARTY: ${{ steps.fetch_tags.outputs.indi-3rdparty }}
-      versionKStasrs: ${{ steps.fetch_tags.outputs.kstars }}
+      versionKStars: ${{ steps.fetch_tags.outputs.kstars }}
     steps:
       - name: Restore
         id: load_cache_release
@@ -40,13 +40,13 @@ jobs:
             RAN=true
             LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/releases/latest | jq -r .tag_name)
             PREVIOUS_TAG=$(jq -r --arg rep "$repo" '.[$rep] // ""' latest_releases.json)
-            echo -n "    ${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
+            echo "${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
             echo "Previous release for $repo(${repo#*/}): $PREVIOUS_TAG"
             if [ "$LATEST_TAG" != "$PREVIOUS_TAG" ]; then
               echo "New release detected for $repo: $LATEST_TAG"
               NEEDS_UPDATE=true
             fi
-            echo "\"$repo\": \"$LATEST_TAG\"" >> new_releases.json
+            echo -n "    \"$repo\": \"$LATEST_TAG\"" >> new_releases.json
           done
           echo "" >> new_releases.json
           echo "}" >> new_releases.json
@@ -68,4 +68,4 @@ jobs:
       - run: |
           echo '${{ needs.check.outputs.versionINDI }}'
           echo '${{ needs.check.outputs.versionINDI3rdPARTY }}'
-          echo '${{ needs.check.outputs.versionKstars }}'
+          echo '${{ needs.check.outputs.versionKStars }}'
