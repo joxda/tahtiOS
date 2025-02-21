@@ -25,7 +25,7 @@ jobs:
       - name: Fetch latest tags
         id: fetch_tags
         run: |
-          REPOS=("indilib/indi" "indilib/indi-3rdparty")
+          REPOS=("indilib/indi" "indilib/indi-3rdparty" "rlancaste/stellarsolver" "joxda/libXISF")
           echo "repos=${REPOS[*]}" >> $GITHUB_ENV
           
           echo "{" > new_releases.json
