@@ -13,6 +13,7 @@ jobs:
       versionINDI: ${{ steps.fetch_tags.outputs.indi }}
       versionINDI3rdPARTY: ${{ steps.fetch_tags.outputs.indi-3rdparty }}
       versionKStars: ${{ steps.fetch_tags.outputs.kstars }}
+      needs_update: ${{ steps.fetch_tags.outputs.needs_update }}
     steps:
       - name: Restore
         id: load_cache_release
@@ -56,7 +57,7 @@ jobs:
           fi
           echo "kstars=$LATEST_TAG" >> $GITHUB_OUTPUT
           
-          echo "needs_update=$NEEDS_UPDATE" >> $GITHUB_ENV
+          echo "needs_update=$NEEDS_UPDATE" >> $GITHUB_OUTPUT
           if [ "$NEEDS_UPDATE" = "true" ]; then
             mv new_releases.json latest_releases.json            
           fi
@@ -67,7 +68,7 @@ jobs:
     needs: check
     steps:
       - name: do stuff
-        if: env.needs_update == 'true'
+        if: needs.check.outpus.needs_update == 'true'
         run: |
           echo "UPDATE"
       - run: |
