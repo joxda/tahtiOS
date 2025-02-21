@@ -68,7 +68,7 @@ jobs:
     needs: check
     steps:
       - name: do stuff
-        if: needs.check.outpus.needs_update == 'true'
+        if: needs.check.outputs.needs_update == 'true'
         run: |
           echo "UPDATE"
       - run: |
