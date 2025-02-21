@@ -24,11 +24,8 @@ jobs:
       - name: Fetch latest tags
         id: fetch_tags
         run: |
-          REPOS=("indilib/indi" "indilib/indi-3rdparty" "KDE/kstars")
+          REPOS=("indilib/indi" "indilib/indi-3rdparty")
           echo "repos=${REPOS[*]}" >> $GITHUB_ENV
-          if [ ! -f last_releases.json ]; then
-            echo "{}" > last_releases.json
-          fi
           
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
@@ -46,11 +43,19 @@ jobs:
               echo "New release detected for $repo: $LATEST_TAG"
               NEEDS_UPDATE=true
             fi
-            echo -n "    \"$repo\": \"$LATEST_TAG\"" >> new_releases.json
+            echo  "    \"$repo\": \"$LATEST_TAG\"," >> new_releases.json
           done
-          echo "" >> new_releases.json
+          LATEST_TAG=$(git ls-remote -h https://invent.kde.org/kde/kstars.git | grep '\/stable-*' | tail -n1 | sed 's/\// /g' | awk '{print $4}')
+          PREVIOUS_TAG=$(jq -r --arg rep "kstars" '.[$rep] // ""' latest_releases.json)
+          echo -n "    \"kstars\": \"$LATEST_TAG\"" >> new_releases.json          
           echo "}" >> new_releases.json
 
+          if [ "$LATEST_TAG" != "$PREVIOUS_TAG" ]; then
+              echo "New release detected for kstars: $LATEST_TAG"
+              NEEDS_UPDATE=true
+          fi
+          echo "kstars=$LATEST_TAG" >> $GITHUB_OUTPUT
+          
           echo "needs_update=$NEEDS_UPDATE" >> $GITHUB_ENV
           if [ "$NEEDS_UPDATE" = "true" ]; then
             mv new_releases.json latest_releases.json            
