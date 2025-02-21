@@ -13,6 +13,8 @@ jobs:
       versionINDI: ${{ steps.fetch_tags.outputs.indi }}
       versionINDI3rdPARTY: ${{ steps.fetch_tags.outputs.indi-3rdparty }}
       versionKStars: ${{ steps.fetch_tags.outputs.kstars }}
+      versionLibXISF: ${{ steps.fetch_tags.outputs.libXISF }}
+      versionStellarSolver: ${{ steps.fetch_tags.outputs.stellarsolver }}
       needs_update: ${{ steps.fetch_tags.outputs.needs_update }}
     steps:
       - name: Restore
@@ -75,12 +77,14 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v4
       - name: Pi Image
+        if: needs.check.outputs.needs_update == 'true'
         id: latestImage
         run: | 
           LATEST_VERSION=$(curl -s https://downloads.raspberrypi.com/raspios_arm64/images/ | grep -oP '(?<=href=")[^"]+(?=")' | sort | tail -n 1)
           echo "LATEST_VERSION=${LATEST_VERSION}" >> $GITHUB_ENV
           echo "Cache Key: raspios-${LATEST_VERSION}"
       - name: Restore
+        if: needs.check.outputs.needs_update == 'true'
         id: cache-restore 
         uses: actions/cache/restore@v4 
         with: 
