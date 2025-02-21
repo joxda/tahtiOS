@@ -43,6 +43,9 @@ jobs:
             if [ -z "$LATEST_TAG" ]; then
                LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/tags | jq -r '.[0].name')
             fi
+            if [ "$LATEST_TAG" = "null" ]; then
+               LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/tags | jq -r '.[0].name')
+            fi
             echo "${repo#*/}=$LATEST_TAG" >> $GITHUB_OUTPUT
             echo "Previous release for $repo(${repo#*/}): $PREVIOUS_TAG"
             if [ "$LATEST_TAG" != "$PREVIOUS_TAG" ]; then
