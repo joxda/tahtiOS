@@ -69,6 +69,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: check
     steps:
+      - name: "Checkout"
+        uses: actions/checkout@v4
       - name: Pi Image
         id: latestImage
         run: | 
@@ -87,6 +89,7 @@ jobs:
         run: | 
           LATEST_DIR="https://downloads.raspberrypi.com/raspios_arm64/images/${LATEST_VERSION}"
           LATEST_FILE=$(curl -s "$LATEST_DIR" | grep -oP '(?<=href=")[^"]+\.img\.xz(?=)' | head -n 1)
+          echo "RaspiVERSION=$LATEST_FILE" >> $GITHUB_ENV
           DOWNLOAD_URL=${LATEST_DIR}${LATEST_FILE}
           wget -O raspios_arm64-latest.img.xz "$DOWNLOAD_URL" 
       - name: Save to Cache 
@@ -94,12 +97,86 @@ jobs:
         uses: actions/cache/save@v4 
         with:
           path: raspios_arm64-latest.img.xz
-          key: raspios-${{env.LATEST_VERSION }} 
+          key: raspios-${{env.LATEST_VERSION }}
       - name: do stuff
         if: needs.check.outputs.needs_update == 'true'
         run: |
           echo "UPDATE"
-      - run: |
-          echo '${{ needs.check.outputs.versionINDI }}'
-          echo '${{ needs.check.outputs.versionINDI3rdPARTY }}'
-          echo '${{ needs.check.outputs.versionKStars }}'
+          #unxz < raspios_arm64-latest.img.xz > input.img
+      #- name: "Prepare release"
+      #    run: |
+      #    now=$(date +"%Y%m%d%H%M%S")
+
+      #    RELEASE_NAME="TahtiOS (build $now)"# TODO "${{ env.OCTOPI_VERSION }} with OctoPrint ${{ env.OCTOPRINT_VERSION }} 
+      #    echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
+
+      #    RELEASE_TAG=TODO-$now #"${{ env.OCTOPI_VERSION }}-${{ env.OCTOPRINT_VERSION }}-$now"
+      #    echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+        
+        # release body
+
+      #    cat <<EOF > ./build/release.md
+  
+      #    * INDI ${{ needs.check.outputs.versionINDI }}
+      #    * KStars ${{ needs.check.outputs.versionKStars }}
+      #    * based on RaspiOS ${{ env.RaspiVERSION }}
+      #    * tahtiOS TODO COMMIT/TAG/RELEASE
+          
+      #  Created with [CustoPiZer](https://github.com/OctoPrint/CustoPiZer)
+
+      #  EOF
+      
+      #- name: "Prepare" -> move stuff to scripts / scripts/files
+      #- name: "Run CustoPiZer"
+      #  uses: OctoPrint/CustoPiZer@main
+      #  with:
+      #    workspace: "${{ github.workspace }}/build"
+      #    scripts:  "${{ github.workspace }}/scripts"
+      #- name: "Rename image"
+      #  run: |
+      #    RELEASE_TAG="${{ env.RELEASE_TAG }}" # TODO
+        
+      #    IMAGE="tahtiOS-$RELEASE_TAG.img"
+      #    echo "IMAGE=$IMAGE" >> $GITHUB_ENV
+
+      #    cd build
+      #    mv output.img $IMAGE
+      #- name: "Package the image"
+      #  id: package-image
+      #  uses: OctoPrint/actions/package-rpi-image@main
+      #  with:
+      #    image_path: "${{ env.IMAGE }}"
+
+      #- name: Export zip name and URL to env
+      #  run: |
+      #    echo "IMAGE_ZIP=${{ steps.package-image.outputs.zip_name }}" >> $GITHUB_ENV
+      #    echo "IMAGE_URL=https://github.com/joxda/tahtiOS/releases/download/${{ env.RELEASE_TAG }}/${{ steps.package-image.outputs.zip_name }}" >> $GITHUB_ENV # TODO RELEASE_TAG
+
+      #- name: "Generate rpi-imager.json snippet"
+      #  uses: OctoPrint/actions/rpi-imager-snippet@main
+      #  with:
+      #  TODO  name: "${{ env.RELEASE_NAME }}"
+      #  TODO  description: "A Raspberry Pi distribution for 3d printers. Ships OctoPrint ${{ env.OCTOPRINT_VERSION }} out-of-the-box."
+      #  TODO  icon: "https://octopi.octoprint.org/rpi-imager.png"
+      #  url: "${{ env.IMAGE_URL }}"
+      #    output: "build/rpi-imager.json"
+      #    image_sha256: ${{ steps.package-image.outputs.image_sha256 }}
+      #    image_size: ${{ steps.package-image.outputs.image_size }}
+      #    zip_sha256: ${{ steps.package-image.outputs.zip_sha256 }}
+      #    zip_size: ${{ steps.package-image.outputs.zip_size }}
+      #   CHECK devices: "pi5-64bit,pi4-64bit,pi3-64bit"
+
+      #- name: "🔖 Create release & attach assets"
+      #  uses: softprops/action-gh-release@v2
+      #  with:
+      #  TODO  name: "${{ env.RELEASE_NAME }}"
+      #  TODO  tag_name: "${{ env.RELEASE_TAG }}"
+      # TODO   body_path: "build/release.md"
+      #    fail_on_unmatched_files: true
+      #    files: |
+      #      build/${{ env.IMAGE_ZIP }}
+      #      build/${{ env.IMAGE_ZIP }}.md5
+      #      build/${{ env.IMAGE_ZIP }}.sha256
+      #      build/rpi-imager.json
+      # env:
+      #  TODO  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
