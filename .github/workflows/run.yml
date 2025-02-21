@@ -92,9 +92,9 @@ jobs:
       - name: Save to Cache 
         if: steps.cache-restore.outputs.cache-hit != 'true' 
         uses: actions/cache/save@v4 
-          with:
-            path: raspios_arm64-latest.img.xz
-            key: raspios-${{env.LATEST_VERSION }} 
+        with:
+          path: raspios_arm64-latest.img.xz
+          key: raspios-${{env.LATEST_VERSION }} 
       - name: do stuff
         if: needs.check.outputs.needs_update == 'true'
         run: |
