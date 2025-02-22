@@ -152,8 +152,7 @@ jobs:
             passwd --expire tahti
           EOF
           pwd
-          ls
-          ls ..
+          ls -alh
       - name: "Run CustoPiZer"
         uses: OctoPrint/CustoPiZer@main
         with:
