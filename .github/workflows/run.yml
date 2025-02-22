@@ -116,7 +116,7 @@ jobs:
       - name: "Prepare release"
         run: |
             now=$(date +"%Y%m%d%H%M%S")
-            RELEASE_NAME="TahtiOS (build $now)"# TODO "${{ env.OCTOPI_VERSION }} with OctoPrint ${{ env.OCTOPRINT_VERSION }} 
+            RELEASE_NAME="TahtiOS (build $now)" # TODO
             echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
 
             RELEASE_TAG=TODO-$now #${{ env.OCTOPI_VERSION }}-${{ env.OCTOPRINT_VERSION }}-$now
