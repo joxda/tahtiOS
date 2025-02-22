@@ -80,14 +80,14 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v4
       - name: Pi Image
-        if: needs.check.outputs.needs_update == 'true'
+        #if: needs.check.outputs.needs_update == 'true'
         id: latestImage
         run: | 
           LATEST_VERSION=$(curl -s https://downloads.raspberrypi.com/raspios_arm64/images/ | grep -oP '(?<=href=")[^"]+(?=")' | sort | tail -n 1)
           echo "LATEST_VERSION=${LATEST_VERSION}" >> $GITHUB_ENV
           echo "Cache Key: raspios-${LATEST_VERSION}"
       - name: Restore
-        if: needs.check.outputs.needs_update == 'true'
+        #if: needs.check.outputs.needs_update == 'true'
         id: cache-restore 
         uses: actions/cache/restore@v4 
         with: 
@@ -101,6 +101,7 @@ jobs:
           LATEST_FILE=$(curl -s "$LATEST_DIR" | grep -oP '(?<=href=")[^"]+\.img\.xz(?=)' | head -n 1)
           echo "RaspiVERSION=$LATEST_FILE" >> $GITHUB_ENV
           DOWNLOAD_URL=${LATEST_DIR}${LATEST_FILE}
+          echo $DOWNLOAD_URL
           wget -O raspios_arm64-latest.img.xz "$DOWNLOAD_URL" 
       - name: Save to Cache 
         if: steps.cache-restore.outputs.cache-hit != 'true' 
