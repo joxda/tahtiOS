@@ -150,11 +150,14 @@ jobs:
             echo "enabled=1" | sudo tee -a workspace/rootfs/etc/vnc/config.d/common
             passwd --expire tahti
           EOF
+          pwd
+          ls
+          ls ..
       - name: "Run CustoPiZer"
         uses: OctoPrint/CustoPiZer@main
         with:
-          workspace: "${{ github.workspace }}/build"
-          scripts:  "${{ github.workspace }}/scripts"
+          workspace: "${{ github.workspace }}/../build"
+          scripts:  "${{ github.workspace }}/../scripts"
       - name: "Rename image"
         run: |
           RELEASE_TAG="${{ env.RELEASE_TAG }}" # TODO
