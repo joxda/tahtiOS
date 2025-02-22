@@ -29,7 +29,7 @@ jobs:
         run: |
           REPOS=("indilib/indi" "indilib/indi-3rdparty" "rlancaste/stellarsolver" "joxda/libXISF")
           echo "repos=${REPOS[*]}" >> $GITHUB_ENV
-          
+
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
           RAN=false
@@ -109,10 +109,11 @@ jobs:
           path: raspios_arm64-latest.img.xz
           key: raspios-${{env.LATEST_VERSION}}-${{ github.run_id }}
       - name: do stuff
-        if: needs.check.outputs.needs_update == 'true'
+        #if: needs.check.outputs.needs_update == 'true'
         run: |
           echo "UPDATE"
-          #unxz < raspios_arm64-latest.img.xz > input.img
+          mkdir build
+          unxz < raspios_arm64-latest.img.xz > build/input.img
       - name: "Prepare release"
         run: |
             now=$(date +"%Y%m%d%H%M%S")
@@ -145,7 +146,7 @@ jobs:
             sudo useradd -m -G sudo -s /bin/bash tahti
             echo "tahti:tahti" | sudo chpasswd
             touch workspace/bootfs/ssh
-            echo "enabled=1" | sudo tee -a woekspace/rootfs/etc/vnc/config.d/common
+            echo "enabled=1" | sudo tee -a workspace/rootfs/etc/vnc/config.d/common
             passwd --expire tahti
           EOF
       - name: "Run CustoPiZer"
