@@ -101,7 +101,7 @@ jobs:
       - name: DownloadImage
         if: steps.cache-restore.outputs.cache-hit != 'true' 
         run: | 
-          DOWNLOAD_URL=${{ env.LATEST_DIR }}${{ env.LATEST_FILE }}
+          DOWNLOAD_URL=${{ env.LATEST_DIR }}${{ env.RaspiVERSION }}
           echo $DOWNLOAD_URL
           wget -O raspios_arm64-latest.img.xz "$DOWNLOAD_URL" 
       - name: Save to Cache 
