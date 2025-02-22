@@ -1,6 +1,6 @@
 on:
-  schedule:
-    - cron: "30 0 * * *"
+  #schedule:
+  #  - cron: "30 0 * * *"
   workflow_dispatch:
   push:
 
@@ -114,14 +114,14 @@ jobs:
           echo "UPDATE"
           #unxz < raspios_arm64-latest.img.xz > input.img
       - name: "Prepare release"
-          run: |
+        run: |
             now=$(date +"%Y%m%d%H%M%S")
             RELEASE_NAME="TahtiOS (build $now)"# TODO "${{ env.OCTOPI_VERSION }} with OctoPrint ${{ env.OCTOPRINT_VERSION }} 
             echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
 
             RELEASE_TAG=TODO-$now #"${{ env.OCTOPI_VERSION }}-${{ env.OCTOPRINT_VERSION }}-$now"
             echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
-        # release body
+            # release body
             cat <<EOF > ./build/release.md
   
               * INDI ${{ needs.check.outputs.versionINDI }}
@@ -156,10 +156,8 @@ jobs:
       - name: "Rename image"
         run: |
           RELEASE_TAG="${{ env.RELEASE_TAG }}" # TODO
-      
           IMAGE="tahtiOS-$RELEASE_TAG.img"
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
-
           cd build
           mv output.img $IMAGE
       - name: "Package the image"
