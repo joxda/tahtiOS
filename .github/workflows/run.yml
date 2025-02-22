@@ -85,22 +85,23 @@ jobs:
         run: | 
           LATEST_VERSION=$(curl -s https://downloads.raspberrypi.com/raspios_arm64/images/ | grep -oP '(?<=href=")[^"]+(?=")' | sort | tail -n 1)
           echo "LATEST_VERSION=${LATEST_VERSION}" >> $GITHUB_ENV
-          echo "Cache Key: raspios-${LATEST_VERSION}"
+          LATEST_DIR="https://downloads.raspberrypi.com/raspios_arm64/images/${LATEST_VERSION}"
+          LATEST_FILE=$(curl -s "$LATEST_DIR" | grep -oP '(?<=href=")[^"]+\.img\.xz(?=)' | head -n 1)
+          echo "RaspiVERSION=$LATEST_FILE" >> $GITHUB_ENV
+          echo "LATEST_DIR=${LATEST_DIR}" >> $GITHUB_ENV
+          echo "Cache Key: raspios-${LATEST_FILE}"
       - name: Restore
         #if: needs.check.outputs.needs_update == 'true'
         id: cache-restore 
         uses: actions/cache/restore@v4 
         with: 
           path: raspios_arm64-latest.img.xz 
-          key: raspios-${{ env.LATEST_VERSION }}-${{ github.run_id }}
-          restore-keys: raspios-${{ env.LATEST_VERSION }}-
+          key: ${{ env.LATEST_FILE }}-${{ github.run_id }}
+          restore-keys: {{ env.LATEST_FILE }}-
       - name: DownloadImage
         if: steps.cache-restore.outputs.cache-hit != 'true' 
         run: | 
-          LATEST_DIR="https://downloads.raspberrypi.com/raspios_arm64/images/${LATEST_VERSION}"
-          LATEST_FILE=$(curl -s "$LATEST_DIR" | grep -oP '(?<=href=")[^"]+\.img\.xz(?=)' | head -n 1)
-          echo "RaspiVERSION=$LATEST_FILE" >> $GITHUB_ENV
-          DOWNLOAD_URL=${LATEST_DIR}${LATEST_FILE}
+          DOWNLOAD_URL=${{ env.LATEST_DIR }}${{ env.LATEST_FILE }}
           echo $DOWNLOAD_URL
           wget -O raspios_arm64-latest.img.xz "$DOWNLOAD_URL" 
       - name: Save to Cache 
@@ -108,13 +109,13 @@ jobs:
         uses: actions/cache/save@v4 
         with:
           path: raspios_arm64-latest.img.xz
-          key: raspios-${{env.LATEST_VERSION}}-${{ github.run_id }}
+          key: ${{env.LATEST_VERSION}}-${{ github.run_id }}
       - name: do stuff
         #if: needs.check.outputs.needs_update == 'true'
         run: |
           echo "UPDATE"
-          mkdir build
-          unxz < raspios_arm64-latest.img.xz > build/input.img
+          mkdir ${{ github.workspace }}/build
+          unxz < raspios_arm64-latest.img.xz > ${{ github.workspace }}/build/input.img
       - name: "Prepare release"
         run: |
             now=$(date +"%Y%m%d%H%M%S")
@@ -124,7 +125,7 @@ jobs:
             RELEASE_TAG=TODO-$now #${{ env.OCTOPI_VERSION }}-${{ env.OCTOPRINT_VERSION }}-$now
             echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
             # release body
-            cat <<EOF > ./build/release.md
+            cat <<EOF > ${{ github.workspace }}/build/release.md
   
               * INDI ${{ needs.check.outputs.versionINDI }}
               * KStars ${{ needs.check.outputs.versionKStars }}
@@ -137,8 +138,8 @@ jobs:
       
       - name: "Prepare" #-> move stuff to scripts / scripts/files
         run: |
-          mkdir scripts
-          cat <<EOF > scripts/01-start.sh
+          mkdir ${{ github.workspace }}/scripts
+          cat <<EOF > ${{ github.workspace }}/scripts/01-start.sh
             set -x
             set -e
             export LC_ALL=C
@@ -156,14 +157,14 @@ jobs:
       - name: "Run CustoPiZer"
         uses: OctoPrint/CustoPiZer@main
         with:
-          workspace: "${{ github.workspace }}/../build"
-          scripts:  "${{ github.workspace }}/../scripts"
+          workspace: "${{ github.workspace }}/build"
+          scripts:  "${{ github.workspace }}/scripts"
       - name: "Rename image"
         run: |
           RELEASE_TAG="${{ env.RELEASE_TAG }}" # TODO
           IMAGE="tahtiOS-$RELEASE_TAG.img"
           echo "IMAGE=$IMAGE" >> $GITHUB_ENV
-          cd build
+          cd ${{ github.workspace }}/build
           mv output.img $IMAGE
       - name: "Package the image"
         id: package-image
