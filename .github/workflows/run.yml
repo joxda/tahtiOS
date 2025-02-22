@@ -97,7 +97,7 @@ jobs:
         with: 
           path: raspios_arm64-latest.img.xz 
           key: ${{ env.LATEST_FILE }}-${{ github.run_id }}
-          restore-keys: {{ env.LATEST_FILE }}-
+          restore-keys: ${{ env.LATEST_FILE }}-
       - name: DownloadImage
         if: steps.cache-restore.outputs.cache-hit != 'true' 
         run: | 
