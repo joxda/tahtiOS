@@ -92,8 +92,8 @@ jobs:
         uses: actions/cache/restore@v4 
         with: 
           path: raspios_arm64-latest.img.xz 
-          key: raspios-${{ env.LATEST_VERSION }} 
-          restore-keys: raspios- 
+          key: raspios-${{ env.LATEST_VERSION }}-${{ github.run_id }}
+          restore-keys: raspios-${{ env.LATEST_VERSION }}-
       - name: DownloadImage
         if: steps.cache-restore.outputs.cache-hit != 'true' 
         run: | 
@@ -107,7 +107,7 @@ jobs:
         uses: actions/cache/save@v4 
         with:
           path: raspios_arm64-latest.img.xz
-          key: raspios-${{env.LATEST_VERSION }}
+          key: raspios-${{env.LATEST_VERSION}}-${{ github.run_id }}
       - name: do stuff
         if: needs.check.outputs.needs_update == 'true'
         run: |
@@ -119,7 +119,7 @@ jobs:
             RELEASE_NAME="TahtiOS (build $now)"# TODO "${{ env.OCTOPI_VERSION }} with OctoPrint ${{ env.OCTOPRINT_VERSION }} 
             echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
 
-            RELEASE_TAG=TODO-$now #"${{ env.OCTOPI_VERSION }}-${{ env.OCTOPRINT_VERSION }}-$now"
+            RELEASE_TAG=TODO-$now #${{ env.OCTOPI_VERSION }}-${{ env.OCTOPRINT_VERSION }}-$now
             echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
             # release body
             cat <<EOF > ./build/release.md
