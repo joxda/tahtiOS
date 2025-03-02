@@ -147,6 +147,7 @@ jobs:
             install_cleanup_trap
             sudo useradd -m -G sudo -s /bin/bash tahti
             echo "tahti:tahti" | sudo chpasswd
+            mkdir -p workspace/bootfs
             touch workspace/bootfs/ssh
             echo "enabled=1" | sudo tee -a workspace/rootfs/etc/vnc/config.d/common
             passwd --expire tahti
