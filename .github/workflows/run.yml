@@ -96,8 +96,8 @@ jobs:
         uses: actions/cache/restore@v4 
         with: 
           path: raspios_arm64-latest.img.xz 
-          key: ${{ env.LATEST_FILE }}-${{ github.run_id }}
-          restore-keys: ${{ env.LATEST_FILE }}-
+          key: raspios-${{ env.RaspiVERSION }}-${{ github.run_id }}
+          restore-keys: raspios-${{ env.RaspiVERSION }}-
       - name: DownloadImage
         if: steps.cache-restore.outputs.cache-hit != 'true' 
         run: | 
@@ -109,7 +109,7 @@ jobs:
         uses: actions/cache/save@v4 
         with:
           path: raspios_arm64-latest.img.xz
-          key: ${{env.LATEST_VERSION}}-${{ github.run_id }}
+          key: raspios-${{ env.RaspiVERSION }}-${{ github.run_id }}
       - name: do stuff
         #if: needs.check.outputs.needs_update == 'true'
         run: |
