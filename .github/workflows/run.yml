@@ -152,12 +152,15 @@ jobs:
             passwd --expire tahti
           EOF
           pwd
+          cat "EDITBASE_ARCH=arm64" > ${{ github.workspace }}/config.local
+
           ls -alh
       - name: "Run CustoPiZer"
         uses: OctoPrint/CustoPiZer@main
         with:
           workspace: "${{ github.workspace }}/build"
           scripts:  "${{ github.workspace }}/scripts"
+          config: "${{ github.workspace }}/congig.local
       - name: "Rename image"
         run: |
           RELEASE_TAG="${{ env.RELEASE_TAG }}" # TODO
