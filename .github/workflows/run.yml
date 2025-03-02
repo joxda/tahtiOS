@@ -160,7 +160,7 @@ jobs:
         with:
           workspace: "${{ github.workspace }}/build"
           scripts:  "${{ github.workspace }}/scripts"
-          config: "${{ github.workspace }}/congig.local"
+          config: "${{ github.workspace }}/config.local"
       - name: "Rename image"
         run: |
           RELEASE_TAG="${{ env.RELEASE_TAG }}" # TODO
