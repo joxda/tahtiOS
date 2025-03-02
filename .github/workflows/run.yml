@@ -152,7 +152,7 @@ jobs:
             passwd --expire tahti
           EOF
           pwd
-          cat "EDITBASE_ARCH=arm64" > ${{ github.workspace }}/config.local
+          echo "EDITBASE_ARCH=arm64" > ${{ github.workspace }}/config.local
 
           ls -alh
       - name: "Run CustoPiZer"
