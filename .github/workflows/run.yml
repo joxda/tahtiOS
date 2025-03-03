@@ -258,6 +258,8 @@ jobs:
           zip_path: "${{ github.workspace }}/build/"
       - name: Export zip name and URL to env
         run: |
+          ls 
+          ls build
           echo "IMAGE_ZIP=${{ steps.package-image.outputs.zip_name }}" >> $GITHUB_ENV
           echo "IMAGE_URL=https://github.com/joxda/tahtiOS/releases/download/${{ env.RELEASE_TAG }}/${{ steps.package-image.outputs.zip_name }}" >> $GITHUB_ENV # TODO RELEASE_TAG
 
@@ -274,7 +276,9 @@ jobs:
           zip_sha256: ${{ steps.package-image.outputs.zip_sha256 }}
           zip_size: ${{ steps.package-image.outputs.zip_size }}
           devices: "pi5-64bit,pi4-64bit,pi3-64bit" #CHECK
-
+      - run: |
+          ls
+          ls build
       - name: "Create release & attach assets"
         uses: softprops/action-gh-release@v2
         with:
