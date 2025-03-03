@@ -83,7 +83,7 @@ jobs:
       - name: "Checkout"
         uses: actions/checkout@v4
       - name: Build Raspberry Pi OS Image
-        uses: lurch/pi-gen-action@v1
+        uses: usimd/pi-gen-action@v1
         with:
           config: config
       - name: Pi Image
