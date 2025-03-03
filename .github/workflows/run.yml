@@ -33,7 +33,7 @@ jobs:
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
           RAN=false
-          if [ -f latest_releases.json == "false" ]; then
+          if [ ! -f latest_releases.json ]; then
              echo "" > latest_releases.json
           fi
           for repo in ${REPOS[*]}; do
