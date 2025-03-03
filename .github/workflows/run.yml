@@ -289,7 +289,7 @@ jobs:
           body_path: "build/release.md"
           fail_on_unmatched_files: true
           files: |
-            build/${{ env.IMAGE_ZIP }}
+            pi-gen/deploy/${{ env.IMAGE_ZIP }}
             build/${{ env.IMAGE_ZIP }}.md5
             build/${{ env.IMAGE_ZIP }}.sha256
             build/rpi-imager.json
