@@ -241,6 +241,7 @@ jobs:
             RELEASE_TAG=TODO-$now #${{ env.OCTOPI_VERSION }}-${{ env.OCTOPRINT_VERSION }}-$now
             echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
             # release body
+            mkdir -p ${{ github.workspace }}/build
             cat <<EOF > ${{ github.workspace }}/build/release.md
   
               * INDI ${{ needs.check.outputs.versionINDI }}
