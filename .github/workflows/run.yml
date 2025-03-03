@@ -79,6 +79,10 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
+      - name: Build Raspberry Pi OS Image
+        uses: lurch/pi-gen-action@v1
+        with:
+          config: config
       - name: Pi Image
         #if: needs.check.outputs.needs_update == 'true'
         id: latestImage
