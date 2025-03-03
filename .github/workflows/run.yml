@@ -82,6 +82,13 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
+      - name: Add Swap
+        run: |
+          sudo fallocate -l 4G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+
       - uses: usimd/pi-gen-action@v1
         with:
     # If you require the use of an apt proxy, set it here. This proxy setting will not 
