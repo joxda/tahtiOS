@@ -99,7 +99,7 @@ jobs:
           key: raspios-${{ env.RaspiVERSION }}-${{ github.run_id }}
           restore-keys: raspios-${{ env.RaspiVERSION }}-
       - name: DownloadImage
-        if: steps.cache-restore.outputs.cache-hit != true 
+        if: steps.cache-restore.outputs.cache-matched-key == ''
         run: | 
           DOWNLOAD_URL=${{ env.LATEST_DIR }}${{ env.RaspiVERSION }}
           echo $DOWNLOAD_URL
@@ -145,7 +145,6 @@ jobs:
             export LC_ALL=C
             source /common.sh
             install_cleanup_trap
-            echo "tahti" > /etc/hostname
             echo "127.0.0.1 $(hostname -s)" >> /etc/hosts
             sudo useradd -m -G sudo -s /bin/bash tahti
             echo "tahti:tahti" | sudo chpasswd
