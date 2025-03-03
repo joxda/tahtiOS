@@ -255,7 +255,7 @@ jobs:
         uses: OctoPrint/actions/package-rpi-image@main
         with:
           image_path: "${{ steps.pigenimage.outputs.image-path }}"
-
+          zip_path: "${{ github.workspace }}/build/"
       - name: Export zip name and URL to env
         run: |
           echo "IMAGE_ZIP=${{ steps.package-image.outputs.zip_name }}" >> $GITHUB_ENV
