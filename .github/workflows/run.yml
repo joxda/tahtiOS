@@ -146,11 +146,11 @@ jobs:
             source /common.sh
             install_cleanup_trap
             echo "127.0.0.1 $(hostname -s)" >> /etc/hosts
-            sudo useradd -m -G sudo -s /bin/bash tahti
-            echo "tahti:tahti" | sudo chpasswd
+            sudo -u pi useradd -m -G sudo -s /bin/bash tahti
+            echo "tahti:tahti" | sudo -u pi chpasswd
             mkdir -p workspace/bootfs
             touch workspace/bootfs/ssh
-            echo "enabled=1" | sudo tee -a workspace/rootfs/etc/vnc/config.d/common
+            echo "enabled=1" | sudo -u pi tee -a workspace/rootfs/etc/vnc/config.d/common
             passwd --expire tahti
           EOF
           pwd
