@@ -90,6 +90,7 @@ jobs:
           sudo swapon /swapfile
 
       - uses: usimd/pi-gen-action@v1
+        id: pigenimage
         with:
     # If you require the use of an apt proxy, set it here. This proxy setting will not 
     # be included in the image, making it safe to use an apt-cacher or similar package 
@@ -253,7 +254,7 @@ jobs:
         id: package-image
         uses: OctoPrint/actions/package-rpi-image@main
         with:
-          image_path: "${{ env.IMAGE }}"
+          image_path: "${{ steps.pigenimage.outputs.image-path }}"
 
       - name: Export zip name and URL to env
         run: |
