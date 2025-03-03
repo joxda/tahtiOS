@@ -290,8 +290,8 @@ jobs:
           fail_on_unmatched_files: true
           files: |
             pi-gen/deploy/${{ env.IMAGE_ZIP }}
-            build/${{ env.IMAGE_ZIP }}.md5
-            build/${{ env.IMAGE_ZIP }}.sha256
+            pi-gen/deploy/${{ env.IMAGE_ZIP }}.md5
+            pi-gen/deploy/${{ env.IMAGE_ZIP }}.sha256
             build/rpi-imager.json
       # env:
       #  TODO  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
