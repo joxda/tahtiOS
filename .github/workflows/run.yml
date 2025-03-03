@@ -254,12 +254,14 @@ jobs:
         id: package-image
         uses: OctoPrint/actions/package-rpi-image@main
         with:
-          image_path: "${{ steps.pigenimage.outputs.image-path }}/tahtiOS*img
+          image_path: "${{ steps.pigenimage.outputs.image-path }}/tahtiOS*img"
           zip_path: "${{ github.workspace }}/build/"
       - name: Export zip name and URL to env
         run: |
           ls 
           ls build
+          ls pi-gen
+          ls pi-gen/deploy
           echo "IMAGE_ZIP=${{ steps.package-image.outputs.zip_name }}" >> $GITHUB_ENV
           echo "IMAGE_URL=https://github.com/joxda/tahtiOS/releases/download/${{ env.RELEASE_TAG }}/${{ steps.package-image.outputs.zip_name }}" >> $GITHUB_ENV # TODO RELEASE_TAG
 
