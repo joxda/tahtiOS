@@ -295,7 +295,7 @@ jobs:
             pi-gen/deploy/${{ env.IMAGE_ZIP }}.sha256
             build/rpi-imager.json
         env:
-          GITHUB_TOKEN: ${{ secrets.
+          GITHUB_TOKEN: ${{ secrets.SECRETTOKEN }}
       - name: Send Email Notification
         uses: dawidd6/action-send-mail@v3
         with:
