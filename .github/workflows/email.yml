@@ -1,0 +1,27 @@
+name: Notify Draft Release
+on:
+  release:
+    types: [created]  # Triggers when a new release is created (draft or published)
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if release is a draft
+        run: |
+          if [ "${{ github.event.release.draft }}" != "true" ]; then
+            echo "Not a draft release. Skipping."
+            exit 0
+          fi
+
+      - name: Send Email Notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "New Draft Release Created: ${{ github.event.release.name }}"
+          body: "A new draft release has been created.\n\nRelease: ${{ github.event.release.html_url }}"
+          to: "${{ secrets.EMAIL_ADDR }}"
+          from: "GitHub Actions <${{ secrets.EMAIL_USERNAME }}>"
