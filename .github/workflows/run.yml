@@ -2,7 +2,7 @@ on:
   #schedule:
   #  - cron: "30 0 * * *"
   workflow_dispatch:
-  push:
+  #push:
 
 jobs:
   check:
@@ -288,6 +288,7 @@ jobs:
           tag_name: "${{ env.RELEASE_TAG }}"
           body_path: "build/release.md"
           fail_on_unmatched_files: true
+          draft: true
           files: |
             pi-gen/deploy/${{ env.IMAGE_ZIP }}
             pi-gen/deploy/${{ env.IMAGE_ZIP }}.md5
