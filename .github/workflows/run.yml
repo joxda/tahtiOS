@@ -98,7 +98,10 @@ jobs:
           sudo chmod +x stageT/prerun.sh
           mkdir stageT/files
           cp -r astro-soft-build/helpers stageT/files
-          cp -r astro-soft-build/config stageT/files
+          cp -r astro-soft-build/configs stageT/files
+          cp -r astro-soft-build/services stageT/files
+          cp -r astro-soft-build/licenses stageT/files
+          cp -r astro-soft-build/fxload stageT/files
           cp astro-soft-build/*sh stageT/
           sudo chmod +x stageT/*.sh
       - uses: usimd/pi-gen-action@v1
