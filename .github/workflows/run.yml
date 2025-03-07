@@ -86,6 +86,7 @@ jobs:
         with:
           repository: joxda/astro-soft-build
           token: ${{ secrets.GITHUB_TOKEN }}
+          path: astro-soft-build
 
       - name: Add Swap
         run: |
