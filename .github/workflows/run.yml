@@ -89,6 +89,7 @@ jobs:
           sudo mkswap /swapfile
           sudo swapon /swapfile
           ls
+          sudo chmod +x stageT/prerun.sh
 
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
