@@ -89,11 +89,6 @@ jobs:
           sudo mkswap /swapfile
           sudo swapon /swapfile
           ls
-          mkdir -p pi-gen
-          mv stageT pi-gen/
-          ls
-          echo "sT"
-          ls pi-gen
 
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
