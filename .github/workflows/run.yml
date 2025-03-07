@@ -89,12 +89,11 @@ jobs:
           sudo mkswap /swapfile
           sudo swapon /swapfile
           ls
-          mkdir -p {{ github.workspace }}/pi-gen
-          mv stageT {{ github.workspace }}/pi-gen
-          echo "ws"
-          echo "{{ github.workspace }}"
-          echo "pg"
-          ls {{ github.workspace }}/pi-gen
+          mkdir -p pi-gen
+          mv stageT pi-gen/
+          ls
+          echo "sT"
+          ls pi-gen
 
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
