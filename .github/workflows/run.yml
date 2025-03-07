@@ -88,6 +88,8 @@ jobs:
           sudo chmod 600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
+          mkdir -p {{ github.workspace }}/pi-gen
+          mv tahtiOS/stageT pi-gen
 
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
