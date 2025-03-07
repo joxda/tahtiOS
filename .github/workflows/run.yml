@@ -85,7 +85,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: joxda/astro-soft-build
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ASTRO_SOFT_TOKEN }}
           path: astro-soft-build
 
       - name: Add Swap
