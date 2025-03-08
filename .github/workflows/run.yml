@@ -225,7 +225,7 @@ jobs:
           username: tahti
 
     # Print all output from pi-gen.
-          verbose-output: true
+          verbose-output: false
 
     # Wifi country code of default network to connect to.
           wpa-country: ''
