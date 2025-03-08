@@ -1,6 +1,5 @@
 #!/bin/bash
-
-sudo -u tahti mkdir /usr/local/tahti
+mkdir /usr/local/tahti
 cd /usr/local/tahti
 pwd
 git clone https://github.com/joxda/astro-soft-build.git
