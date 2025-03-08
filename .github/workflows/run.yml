@@ -181,7 +181,7 @@ jobs:
 
     # The release name to use in `/etc/issue.txt`. The default should only be used for 
     # official Raspberry Pi builds.
-          pi-gen-release: TahtiOS
+          pi-gen-release: tahtiOS
 
     # GitHub repository to fetch pi-gen from, must be a fork from RPi-Distro/pi-gen.
           pi-gen-repository: RPi-Distro/pi-gen
@@ -225,7 +225,7 @@ jobs:
           username: tahti
 
     # Print all output from pi-gen.
-          verbose-output: false
+          verbose-output: true
 
     # Wifi country code of default network to connect to.
           wpa-country: ''
