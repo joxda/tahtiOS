@@ -1,5 +1,9 @@
 #!/bin/bash
+set -e
+
 echo "Start"
+
+on_chroot << EOF
 sudo -u tahti mkdir /usr/local/tahti
 cd /usr/local/tahti
 pwd
@@ -11,4 +15,5 @@ bash build-soft-stable.sh phd2
 bash build-more.sh
 bash installPythonRelated.sh
 bash extra-setup.sh
+EOF
 echo "End"
