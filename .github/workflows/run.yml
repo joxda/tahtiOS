@@ -82,11 +82,6 @@ jobs:
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: joxda/astro-soft-build
-          token: ${{ secrets.ASTRO_SOFT_TOKEN }}
-          path: astro-soft-build
 
       - name: Add Swap
         run: |
@@ -96,14 +91,8 @@ jobs:
           sudo swapon /swapfile
           ls
           sudo chmod +x stageT/prerun.sh
-          mkdir stageT/files
-          cp -r astro-soft-build/helpers stageT/files
-          cp -r astro-soft-build/configs stageT/files
-          cp -r astro-soft-build/services stageT/files
-          cp -r astro-soft-build/licenses stageT/files
-          cp -r astro-soft-build/fxload stageT/files
-          cp astro-soft-build/*sh stageT/
-          sudo chmod +x stageT/*.sh
+          sudo chmod +x stageT/01-*/01-*.sh
+
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
         with:
