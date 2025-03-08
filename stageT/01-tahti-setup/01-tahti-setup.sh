@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e
+#!/bin/bash -e
 
 echo "Start"
 
@@ -16,4 +15,5 @@ bash build-more.sh
 bash installPythonRelated.sh
 bash extra-setup.sh
 EOF
+
 echo "End"
