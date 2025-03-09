@@ -91,7 +91,7 @@ jobs:
           sudo swapon /swapfile
           ls
           sudo chmod +x stageT/prerun.sh
-          sudo chmod +x stageT/01-*/01-*.sh
+          sudo chmod +x stageT/01-*/0?-*.sh
 
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
