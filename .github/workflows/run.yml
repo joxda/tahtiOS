@@ -236,6 +236,8 @@ jobs:
     # Password of default wifi network to connect to.
           wpa-password: ''
 
+          use-qemu: 1
+
 
       - name: "Prepare release"
         run: |
