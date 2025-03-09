@@ -10,8 +10,6 @@ export CXXFLAGS="-march=armv8.2-a -mtune=cortex-a72 -mno-outline-atomics"
 export CC="aarch64-linux-gnu-gcc"
 export CXX="aarch64-linux-gnu-g++"
 
--march=armv8.2-a
-
 
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
