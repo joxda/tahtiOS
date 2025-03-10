@@ -1,12 +1,9 @@
   cdbs
   dkms
   fxload
-  libgsl-dev 
   libusb-dev
-  zlib1g-dev
   libjpeg-dev
   libkrb5-dev
-  libnova-dev
   libtheora-dev
 libnova-dev 
 libcfitsio-dev
