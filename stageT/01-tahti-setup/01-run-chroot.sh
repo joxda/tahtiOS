@@ -5,9 +5,10 @@ cd /usr/local/tahti
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
 ls
+chmos +x *.sh
 #bash build-fxload.sh
-bash build-soft-stable.sh phd2
-bash build-more.sh
-bash installPythonRelated.sh
-bash extra-setup.sh
+./build-soft-stable.sh phd2
+./build-more.sh
+./installPythonRelated.sh
+./extra-setup.sh
 
