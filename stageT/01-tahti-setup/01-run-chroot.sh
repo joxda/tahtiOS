@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -e -x
 tee -a /build.log
 mkdir /usr/local/tahti
 cd /usr/local/tahti
