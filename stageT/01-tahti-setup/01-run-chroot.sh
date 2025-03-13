@@ -1,7 +1,8 @@
-#!/bin/bash -e -x
-tee -a /build.log
-on_chroot <<EOF
-mkdir /usr/local/tahti
+#!/bin/bash
+set -ex
+tee -a /tmp/build.log
+on_chroot <<EOF | tee /tmp/debug.log
+mkdir -p /usr/local/tahti
 cd /usr/local/tahti
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build

@@ -225,7 +225,7 @@ jobs:
           username: tahti
 
     # Print all output from pi-gen.
-          verbose-output: false
+          verbose-output: true
 
     # Wifi country code of default network to connect to.
           wpa-country: ''
@@ -264,6 +264,7 @@ jobs:
           zip_path: "${{ github.workspace }}/build/"
       - name: Export zip name and URL to env
         run: |
+          cat /tmp/build.log
           ls 
           ls build
           ls pi-gen
