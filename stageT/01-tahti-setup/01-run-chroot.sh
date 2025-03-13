@@ -1,8 +1,8 @@
 #!/bin/bash
 set -ex
 tee -a /tmp/build.log
-on_chroot <<EOF | tee /tmp/debug.log
-mkdir -p /usr/local/tahti
+install -m 755 -o 1000 -g 1000 -d "${ROOTFS_DIR}/usr/local/tahti"
+on_chroot <<EOF
 cd /usr/local/tahti
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
