@@ -7,7 +7,7 @@ cd /usr/local/tahti
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
 ls
-chmos +x *.sh
+chmod +x *.sh
 #bash build-fxload.sh
 ./build-soft-stable.sh phd2
 ./build-more.sh
