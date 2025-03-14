@@ -264,7 +264,6 @@ jobs:
           zip_path: "${{ github.workspace }}/build/"
       - name: Export zip name and URL to env
         run: |
-          cat /tmp/build.log
           ls 
           ls build
           ls pi-gen
