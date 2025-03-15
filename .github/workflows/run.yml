@@ -139,13 +139,12 @@ jobs:
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
           mkdir -p ${{ github.workspace }}/build
           cat <<EOF > ${{ github.workspace }}/build/release.md
-            ${{ RELEASE_NAME }}
+            $RELEASE_NAME
             * based on Raspberry Pi OS (64bit, bookworm)
             * INDI ${{ needs.check.outputs.versionINDI }}
             * KStars ${{ needs.check.outputs.versionKStars }}
-            * StellarSolver ${{ versionStellarSolver }}
-            * libXISF ${{ versionLibXISF }}
-            * ${{ RELEASE_NAME }}
+            * StellarSolver ${{ needs.check.outputs.versionStellarSolver }}
+            * libXISF ${{ needs.check.outputs.versionLibXISF }}
           EOF
       - name: "Package the image"
         id: package-image
