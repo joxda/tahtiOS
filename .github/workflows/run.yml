@@ -8,7 +8,7 @@ jobs:
   check:
     name: Check Version
     runs-on: ubuntu-latest
-    
+
     outputs:
       versionINDI: ${{ steps.fetch_tags.outputs.indi }}
       versionINDI3rdPARTY: ${{ steps.fetch_tags.outputs.indi-3rdparty }}
@@ -67,13 +67,11 @@ jobs:
               NEEDS_UPDATE=true
           fi
           echo "kstars=$LATEST_TAG" >> $GITHUB_OUTPUT
-          
+
           echo "needs_update=$NEEDS_UPDATE" >> $GITHUB_OUTPUT
           if [ "$NEEDS_UPDATE" = "true" ]; then
             mv new_releases.json latest_releases.json            
           fi
-
-
 
   dothings:
     name: Print the result from check
@@ -96,166 +94,167 @@ jobs:
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
         with:
-    # If you require the use of an apt proxy, set it here. This proxy setting will not 
-    # be included in the image, making it safe to use an apt-cacher or similar package 
-    # for development.
-          apt-proxy: ''
+          # If you require the use of an apt proxy, set it here. This proxy setting will not
+          # be included in the image, making it safe to use an apt-cacher or similar package
+          # for development.
+          apt-proxy: ""
 
-    # Compression to apply on final image (either "none", "zip", "xz" or "gz").
+          # Compression to apply on final image (either "none", "zip", "xz" or "gz").
           compression: none
 
-    # Compression level to be used. From 0 to 9 (refer to the tool man page for more 
-    # information on this. Usually 0 is no compression but very fast, up to 9 with the 
-    # best compression but very slow).
+          # Compression level to be used. From 0 to 9 (refer to the tool man page for more
+          # information on this. Usually 0 is no compression but very fast, up to 9 with the
+          # best compression but very slow).
           compression-level: 6
 
-    # Disable the renaming of the first user during the first boot. This make it so 
-    # 'username' stays activated. 'username' must be set for this to work. Please be 
-    # aware of the implied security risk of defining a default username and password 
-    # for your devices.
+          # Disable the renaming of the first user during the first boot. This make it so
+          # 'username' stays activated. 'username' must be set for this to work. Please be
+          # aware of the implied security risk of defining a default username and password
+          # for your devices.
           disable-first-boot-user-rename: 0
 
-    # Additional options to include in PIGEN_DOCKER_OPTS
-          docker-opts: ''
+          # Additional options to include in PIGEN_DOCKER_OPTS
+          docker-opts: ""
 
-    # Set whether a NOOBS image should be built as well. If enabled, the output 
-    # directory containing the NOOBS files will be saved as output variable 
-    # 'image-noobs-path'.
+          # Set whether a NOOBS image should be built as well. If enabled, the output
+          # directory containing the NOOBS files will be saved as output variable
+          # 'image-noobs-path'.
           enable-noobs: false
 
-    # Enable SSH access to Pi.
+          # Enable SSH access to Pi.
           enable-ssh: 1
 
-    # If this feature is enabled, the action will configure pi-gen to not export any 
-    # stage as image but the last one defined in property 'stage-list'. This is 
-    # helpful when building a single image flavor (in contrast to building a 
-    # lite/server and full-blown desktop image), since it speeds up the build process 
-    # significantly.
+          # If this feature is enabled, the action will configure pi-gen to not export any
+          # stage as image but the last one defined in property 'stage-list'. This is
+          # helpful when building a single image flavor (in contrast to building a
+          # lite/server and full-blown desktop image), since it speeds up the build process
+          # significantly.
           export-last-stage-only: true
 
-    # Comma or whitespace separated list of additional packages to install on host 
-    # before running pi-gen. Use this list to add any packages your custom stages may 
-    # require. Note that this is not affecting the final image. In order to add 
-    # additional packages, you need to add a respective 'XX-packages' file in your 
-    # custom stage.
-          extra-host-dependencies: ''
+          # Comma or whitespace separated list of additional packages to install on host
+          # before running pi-gen. Use this list to add any packages your custom stages may
+          # require. Note that this is not affecting the final image. In order to add
+          # additional packages, you need to add a respective 'XX-packages' file in your
+          # custom stage.
+          extra-host-dependencies: ""
 
-    # Comma or whitespace separated list of additional modules to load on host before 
-    # running pi-gen. If your custom stage requires additional software or kernel 
-    # modules to be loaded, add them here. Note that this is not meant to configure 
-    # modules to be loaded in the target image.
-          extra-host-modules: ''
+          # Comma or whitespace separated list of additional modules to load on host before
+          # running pi-gen. If your custom stage requires additional software or kernel
+          # modules to be loaded, add them here. Note that this is not meant to configure
+          # modules to be loaded in the target image.
+          extra-host-modules: ""
 
-    # Token to use for checking out pi-gen repo.
+          # Token to use for checking out pi-gen repo.
           github-token: ${{ github.token }}
 
-    # Host name of the image.
+          # Host name of the image.
           hostname: tahti
 
-    # Final image name.
-          image-name: 'tahtiOS'
+          # Final image name.
+          image-name: "tahtiOS"
 
-    # Enabling this option will remove plenty of components from the GitHub Actions 
-    # runner that are not mandatory pre-requisites for a (vanilla) pi-gen build. This 
-    # shall increase the available disk space so that also large images can be 
-    # compiled on a free GHA runner (benchmark is the full image including a desktop 
-    # environment). If any packages are missing during the build consider adding them 
-    # to the `extra-host-dependencies` list.
+          # Enabling this option will remove plenty of components from the GitHub Actions
+          # runner that are not mandatory pre-requisites for a (vanilla) pi-gen build. This
+          # shall increase the available disk space so that also large images can be
+          # compiled on a free GHA runner (benchmark is the full image including a desktop
+          # environment). If any packages are missing during the build consider adding them
+          # to the `extra-host-dependencies` list.
           increase-runner-disk-size: true
 
-    # Default keyboard keymap.
+          # Default keyboard keymap.
           keyboard-keymap: gb
 
-    # Default keyboard layout.
+          # Default keyboard layout.
           keyboard-layout: English (UK)
 
-    # Default locale of the system image.
+          # Default locale of the system image.
           locale: en_GB.UTF-8
 
-    # Password of the intial user account, locked if empty.
-          password: 'tahti'
+          # Password of the intial user account, locked if empty.
+          password: "tahti"
 
-    # Path where selected pi-gen ref will be checked out to. If the path does not yet 
-    # exist, it will be created (including its parents).
+          # Path where selected pi-gen ref will be checked out to. If the path does not yet
+          # exist, it will be created (including its parents).
           pi-gen-dir: pi-gen
 
-    # The release name to use in `/etc/issue.txt`. The default should only be used for 
-    # official Raspberry Pi builds.
+          # The release name to use in `/etc/issue.txt`. The default should only be used for
+          # official Raspberry Pi builds.
           pi-gen-release: tahtiOS
 
-    # GitHub repository to fetch pi-gen from, must be a fork from RPi-Distro/pi-gen.
+          # GitHub repository to fetch pi-gen from, must be a fork from RPi-Distro/pi-gen.
           pi-gen-repository: RPi-Distro/pi-gen
 
-    # Release version of pi-gen to use. This can both be a branch or tag name known in 
-    # the pi-gen repository.
+          # Release version of pi-gen to use. This can both be a branch or tag name known in
+          # the pi-gen repository.
           pi-gen-version: arm64
 
-    # Setting to `1` will disable password authentication for SSH and enable public 
-    # key authentication. Note that if SSH is not enabled this will take effect when 
-    # SSH becomes enabled.
+          # Setting to `1` will disable password authentication for SSH and enable public
+          # key authentication. Note that if SSH is not enabled this will take effect when
+          # SSH becomes enabled.
           pubkey-only-ssh: 0
 
-    # Setting this to a value will make that value the contents of the 
-    # FIRST_USER_NAME's ~/.ssh/authorized_keys. Obviously the value should therefore 
-    # be a valid authorized_keys file. Note that this does not automatically enable 
-    # SSH.
-          pubkey-ssh-first-user: ''
+          # Setting this to a value will make that value the contents of the
+          # FIRST_USER_NAME's ~/.ssh/authorized_keys. Obviously the value should therefore
+          # be a valid authorized_keys file. Note that this does not automatically enable
+          # SSH.
+          pubkey-ssh-first-user: ""
 
-    # The release version to build images against. Valid values are jessie, stretch, 
-    # buster, bullseye, bookworm, and testing.
+          # The release version to build images against. Valid values are jessie, stretch,
+          # buster, bullseye, bookworm, and testing.
           release: bookworm
 
-    # Setting to `1` will prevent pi-gen from dropping the "capabilities" feature. 
-    # Generating the root filesystem with capabilities enabled and running it from a 
-    # filesystem that does not support capabilities (like NFS) can cause issues. Only 
-    # enable this if you understand what it is.
-          setfcap: ''
+          # Setting to `1` will prevent pi-gen from dropping the "capabilities" feature.
+          # Generating the root filesystem with capabilities enabled and running it from a
+          # filesystem that does not support capabilities (like NFS) can cause issues. Only
+          # enable this if you understand what it is.
+          setfcap: ""
 
-    # List of stage name to execute in given order. Relative and absolute paths to 
-    # custom stage directories are allowed here. Note that by default pi-gen exports 
-    # images in stage2 (lite), stage4 and stage5. You probably want to hook in custom 
-    # stages before one of the exported stages. Otherwise, the action will make sure 
-    # any custom stage will include an image export directive.
+          # List of stage name to execute in given order. Relative and absolute paths to
+          # custom stage directories are allowed here. Note that by default pi-gen exports
+          # images in stage2 (lite), stage4 and stage5. You probably want to hook in custom
+          # stages before one of the exported stages. Otherwise, the action will make sure
+          # any custom stage will include an image export directive.
           stage-list: stage0 stage1 stage2 stage3 ./stageT
 
-    # System timezone.
+          # System timezone.
           timezone: Europe/London
 
-    # Name of the initial user account.
+          # Name of the initial user account.
           username: tahti
 
-    # Print all output from pi-gen.
+          # Print all output from pi-gen.
           verbose-output: true
 
-    # Wifi country code of default network to connect to.
-          wpa-country: ''
+          # Wifi country code of default network to connect to.
+          wpa-country: ""
 
-    # SSID of a default wifi network to connect to.
-          wpa-essid: ''
+          # SSID of a default wifi network to connect to.
+          wpa-essid: ""
 
-    # Password of default wifi network to connect to.
-          wpa-password: ''
+          # Password of default wifi network to connect to.
+          wpa-password: ""
 
           use-qemu: 1
 
-
       - name: "Prepare release"
         run: |
-            now=$(date +"%Y%m%d%H%M%S")
-            RELEASE_NAME="tahtiOS (build $now)" # TODO
-            echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
+          now=$(date +"%Y.%m%d")
+          RELEASE_NAME="tahtiOS (build $now)" # TODO
+          echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
 
-            RELEASE_TAG=TODO-$now #${{ env.OCTOPI_VERSION }}-${{ env.OCTOPRINT_VERSION }}-$now
-            echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
-            # release body
-            mkdir -p ${{ github.workspace }}/build
-            cat <<EOF > ${{ github.workspace }}/build/release.md
-  
-              * INDI ${{ needs.check.outputs.versionINDI }}
-              * KStars ${{ needs.check.outputs.versionKStars }}
-              * based on RaspiOS ${{ env.RaspiVERSION }}
-              * tahtiOS TODO COMMIT/TAG/RELEASE
-            EOF
+          RELEASE_TAG=tahtiOS-v$now
+          echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+          # release body
+          mkdir -p ${{ github.workspace }}/build
+          cat <<EOF > ${{ github.workspace }}/build/release.md
+            ${{ RELEASE_NAME }}
+            * based on Raspberry Pi OS (64bit, bookworm)
+            * INDI ${{ needs.check.outputs.versionINDI }}
+            * KStars ${{ needs.check.outputs.versionKStars }}
+            * StellarSolver ${{ versionStellarSolver }}
+            * libXISF ${{ versionLibXISF }}
+            * ${{ RELEASE_NAME }}
+          EOF
       - name: "Package the image"
         id: package-image
         uses: OctoPrint/actions/package-rpi-image@main
@@ -276,7 +275,7 @@ jobs:
         with:
           name: "${{ env.RELEASE_NAME }}"
           description: "A Raspberry Pi TODO" #distribution for 3d printers. Ships OctoPrint ${{ env.OCTOPRINT_VERSION }} out-of-the-box."
-      #  TODO  icon: "https://octopi.octoprint.org/rpi-imager.png"
+          #  TODO  icon: "https://octopi.octoprint.org/rpi-imager.png"
           url: "${{ env.IMAGE_URL }}"
           output: "build/rpi-imager.json"
           image_sha256: ${{ steps.package-image.outputs.image_sha256 }}
@@ -312,4 +311,4 @@ jobs:
           subject: "New Draft Release Created: ${{ env.RELEASE_NAME }}"
           body: "A new draft release has been created.\n\nRelease: ${{ env.RELEASE_NAME }}"
           to: "${{ secrets.EMAIL_ADDR }}"
-          from: "GitHub Actions <${{ secrets.EMAIL_USERNAME }}>"     
+          from: "GitHub Actions <${{ secrets.EMAIL_USERNAME }}>"
