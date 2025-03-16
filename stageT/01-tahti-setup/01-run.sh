@@ -8,7 +8,7 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 cd /usr/local/tahti
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
-ls
+cmake . -LA | grep USB1
 chmod +x *.sh
 #bash build-fxload.sh
 ./build-soft-stable.sh phd2
