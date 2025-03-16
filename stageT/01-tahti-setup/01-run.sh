@@ -8,6 +8,9 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 cd /usr/local/tahti
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
+echo "cmake_minimum_required(VERSION 3.0)" > CMakeLists.txt
+echo "project(TempProject)" >> CMakeLists.txt
+echo "find_package(USB1 REQUIRED)" >> CMakeLists.txt
 cmake . -LA | grep USB1
 chmod +x *.sh
 #bash build-fxload.sh
