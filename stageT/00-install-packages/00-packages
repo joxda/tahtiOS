@@ -72,8 +72,4 @@ nginx
 ufw
 # lazarus-ide #(astap)
 libwxgtk3.2-dev #(phd2)
-libavcodec
-libavdevice
-libavformat
-libavutil
-libswscale
+ffmpeg
