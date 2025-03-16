@@ -127,7 +127,6 @@ jobs:
           wpa-country: ""
           wpa-essid: ""
           wpa-password: ""
-          use-qemu: 1
 
       - name: "Prepare release"
         run: |
