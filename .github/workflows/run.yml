@@ -76,6 +76,7 @@ jobs:
   dothings:
     name: Print the result from check
     runs-on: ubuntu-latest
+    timeout-minutes: 1200
     needs: check
     steps:
       - name: "Checkout"
