@@ -1,7 +1,7 @@
   cdbs
   dkms
   fxload
-  #libusb-dev
+  libusb-dev
   libjpeg-dev
   libkrb5-dev
   libtheora-dev

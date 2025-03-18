@@ -123,7 +123,7 @@ jobs:
           stage-list: stage0 stage1 stage2 stage3 ./stageT
           timezone: Europe/London
           username: tahti
-          verbose-output: false
+          verbose-output: true
           wpa-country: ""
           wpa-essid: ""
           wpa-password: ""
