@@ -74,3 +74,4 @@ ffmpeg
 pkg-config
 # lazarus-ide #(astap)
 libwxgtk3.2-dev #(phd2)
+ninja-build
