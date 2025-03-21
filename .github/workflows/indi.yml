@@ -14,9 +14,9 @@ jobs:
           sudo systemctl start docker || true
           docker --version
 
-      - name: Pull Raspberry Pi OS Bookworm Docker Image
+      - name: Pull Raspberry Pi OS Bookworm Docker
         run: |
-          docker pull ghcr.io/lukechilds/raspbian:bookworm
+          docker pull docker.io/raspberrypi/os:latest
 
       - name: Build INDI inside Docker
         run: |
