@@ -21,9 +21,9 @@ jobs:
       - name: Build INDI inside Docker
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace dtcooper/raspberrypi-os:latest bash -c "
-            sudo apt-add-repository ppa:mutlaqja/ppa &&
+            apt-add-repository ppa:mutlaqja/ppa &&
             apt update &&
-            sudo apt-get install -y \
+            apt-get install -y \
   libxisf-dev \
   git \
   cdbs \
