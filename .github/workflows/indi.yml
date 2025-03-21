@@ -21,6 +21,7 @@ jobs:
       - name: Build INDI inside Docker
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace dtcooper/raspberrypi-os:latest bash -c "
+            sudo apt update && sudo apt install -y software-properties-common &&
             apt-add-repository ppa:mutlaqja/ppa &&
             apt update &&
             apt-get install -y \
