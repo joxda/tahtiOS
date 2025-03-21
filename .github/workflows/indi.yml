@@ -16,7 +16,7 @@ jobs:
 
       - name: Pull Raspberry Pi OS Bookworm Docker
         run: |
-          docker pull docker.io/raspberrypi/os:latest
+          docker pull dtcooper/raspberrypi-os:latest
 
       - name: Build INDI inside Docker
         run: |
