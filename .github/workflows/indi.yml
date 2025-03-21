@@ -20,7 +20,7 @@ jobs:
 
       - name: Build INDI inside Docker
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace ghcr.io/lukechilds/raspbian:bookworm bash -c "
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace dtcooper/raspberrypi-os:latest bash -c "
             apt update &&
             apt install -y cmake build-essential git \
                             libcfitsio-dev libusb-1.0-0-dev \
