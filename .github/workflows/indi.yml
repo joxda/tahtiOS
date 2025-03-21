@@ -52,7 +52,9 @@ jobs:
             git clone --depth=1 https://github.com/indilib/indi.git &&
             mkdir -p indi/build && cd indi/build &&
             cmake .. &&
-            make -j$(nproc)
+            make -j$(nproc) &&
+            cpack -G TGZ --config CPackConfig.cmake &&
+            cp *tgz /workspace
           "
 
       - name: Save INDI binaries as artifacts
@@ -60,5 +62,4 @@ jobs:
         with:
           name: indi-binaries
           path: |
-            indi/build/bin/
-            indi/build/lib/
+            ${{ github.workspace }}/*tgz
