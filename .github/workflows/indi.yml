@@ -9,10 +9,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Docker
+      - name: Ensure Docker is Running
         run: |
-          sudo apt update
-          sudo apt install -y docker.io
+          sudo systemctl start docker || true
+          docker --version
 
       - name: Pull Raspberry Pi OS Bookworm Docker Image
         run: |
