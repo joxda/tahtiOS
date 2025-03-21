@@ -1,0 +1,44 @@
+name: Build INDI for Raspberry Pi OS Bookworm
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04-arm # Use native ARM64 runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Docker
+        run: |
+          sudo apt update
+          sudo apt install -y docker.io
+
+      - name: Pull Raspberry Pi OS Bookworm Docker Image
+        run: |
+          docker pull ghcr.io/lukechilds/raspbian:bookworm
+
+      - name: Build INDI inside Docker
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace ghcr.io/lukechilds/raspbian:bookworm bash -c "
+            apt update &&
+            apt install -y cmake build-essential git \
+                            libcfitsio-dev libusb-1.0-0-dev \
+                            libgsl-dev libjpeg-dev libnova-dev \
+                            libusb-dev zlib1g-dev \
+                            libavcodec-dev libavformat-dev libswscale-dev \
+                            libfftw3-dev libcurl4-gnutls-dev \
+                            qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools &&
+            git clone --depth=1 https://github.com/indilib/indi.git &&
+            mkdir -p indi/build && cd indi/build &&
+            cmake .. &&
+            make -j$(nproc)
+          "
+
+      - name: Save INDI binaries as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: indi-binaries
+          path: |
+            indi/build/bin/
+            indi/build/lib/
