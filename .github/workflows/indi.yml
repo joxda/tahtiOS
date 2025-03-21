@@ -21,14 +21,36 @@ jobs:
       - name: Build INDI inside Docker
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace dtcooper/raspberrypi-os:latest bash -c "
+            sudo apt-add-repository ppa:mutlaqja/ppa &&
             apt update &&
-            apt install -y cmake build-essential git \
-                            libcfitsio-dev libusb-1.0-0-dev \
-                            libgsl-dev libjpeg-dev libnova-dev \
-                            libusb-dev zlib1g-dev \
-                            libavcodec-dev libavformat-dev libswscale-dev \
-                            libfftw3-dev libcurl4-gnutls-dev \
-                            qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools &&
+            sudo apt-get install -y \
+  libxisf-dev \
+  git \
+  cdbs \
+  dkms \
+  cmake \
+  fxload \
+  libev-dev \
+  libgps-dev \
+  libgsl-dev \
+  libraw-dev \
+  libusb-dev \
+  zlib1g-dev \
+  libftdi-dev \
+  libjpeg-dev \
+  libkrb5-dev \
+  libnova-dev \
+  libtiff-dev \
+  libfftw3-dev \
+  librtlsdr-dev \
+  libcfitsio-dev \
+  libgphoto2-dev \
+  build-essential \
+  libusb-1.0-0-dev \
+  libdc1394-dev \
+  libboost-regex-dev \
+  libcurl4-gnutls-dev \
+  libtheora-dev &&
             git clone --depth=1 https://github.com/indilib/indi.git &&
             mkdir -p indi/build && cd indi/build &&
             cmake .. &&
