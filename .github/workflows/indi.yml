@@ -31,9 +31,9 @@ jobs:
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
           RAN=false
-          #if [ ! -f latest_releases.json ]; then
+          if [ ! -f latest_releases.json ]; then
             echo "{}" > latest_releases.json
-          #fi
+          fi
           for repo in ${REPOS[*]}; do
             if [ "$RAN" = "true" ]; then
               echo "," >> new_releases.json
@@ -123,7 +123,7 @@ jobs:
             git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }} &&
             mkdir -p libXISF/build && cd libXISF/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake .. -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=libXISF -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionLibXISF }} -DCPACK_PACKAGE_CONTACT="joxda@github" ..
+            cmake -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=libXISF -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionLibXISF }} -DCPACK_PACKAGE_CONTACT="joxda@github" ..
             make -j$(nproc) &&
             make install &&
             cpack -G TGZ &&
