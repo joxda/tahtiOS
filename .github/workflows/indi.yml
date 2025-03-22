@@ -120,7 +120,7 @@ jobs:
             libtheora-dev \
             libboost-dev libboost-regex-dev librtlsdr-dev liblimesuite-dev libftdi1-dev libavcodec-dev libavdevice-dev \
             wcslib-dev qtbase5-dev \
-            libeigen3-dev   extra-cmake-modules libkf5plotting-dev libqt5svg5-dev libkf5xmlgui-dev libkf5kio-dev kinit-dev libkf5newstuff-dev libkf5doctools-dev libkf5notifications-dev qtdeclarative5-dev libkf5crash-dev gettext libraw-dev libkf5notifyconfig-dev wcslib-dev libqt5websockets5-dev xplanet xplanet-images qt5keychain-dev libsecret-1-dev breeze-icon-theme libqt5datavisualization5-dev &&
+            libopencv-dev libeigen3-dev   extra-cmake-modules libkf5plotting-dev libqt5svg5-dev libkf5xmlgui-dev libkf5kio-dev kinit-dev libkf5newstuff-dev libkf5doctools-dev libkf5notifications-dev qtdeclarative5-dev libkf5crash-dev gettext libraw-dev libkf5notifyconfig-dev wcslib-dev libqt5websockets5-dev xplanet xplanet-images qt5keychain-dev libsecret-1-dev breeze-icon-theme libqt5datavisualization5-dev &&
             git clone --depth 1 https://github.com/joxda/libXISF.git &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }}
             mkdir -p libXISF/build && cd libXISF/build &&
@@ -132,6 +132,7 @@ jobs:
             cp *tar.gz /workspace
             cd ../.. &&
             git clone --depth=1 https://github.com/indilib/indi.git &&
+            git fetch --tags &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionINDI }}
             mkdir -p indi/build && cd indi/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
@@ -140,10 +141,12 @@ jobs:
             make install &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
-            cd ../..
+            cd ../.. &&
             git clone --depth=1 https://github.com/indilib/indi-3rd-party.git &&
+            git fetch --tags &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionINDI3rdPARTY }}
-            mkdir -p indi-3rd-party/build/ && cd indi-3rd-party/build &&
+            mkdir -p indi-3rd-party/build && cd indi-3rd-party/build &&
+            pwd && ls && ls .. &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
@@ -152,11 +155,11 @@ jobs:
             mkdir ../build2 && cd ../build2 &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
-            make install &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
             cd ../.. &&
-            git clone --depth 1 https://github.com/rlancaste/stellarsolver.git &&
+            git clone https://github.com/rlancaste/stellarsolver.git &&
+            git fetch --tags &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionStellarSolver }}
             mkdir stellarsolver/build && cd stellarsolver/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
@@ -167,10 +170,11 @@ jobs:
             cp *tar.gz /workspace
             cd ../.. &&
             git clone --depth 1 https://invent.kde.org/education/kstars.git &&
-            	git switch -d --discard-changes ${{ needs.check.outputs.version.KStars }}
+            git fetch --tags &&
+            git switch -d --discard-changes ${{ needs.check.outputs.version.KStars }}
             mkdir kstars/build && cd kstars/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake .. -DCMAKE_BUILD_TYPE=Release  -DBUILD_TESTING=OFF -DBUILD_DOC=OFF -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=KStars DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionKStars }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
+            cmake .. -DCMAKE_BUILD_TYPE=Release  -DBUILD_TESTING=OFF -DBUILD_DOC=OFF -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=KStars -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionKStars }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
             make -j$(nproc) &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
@@ -178,6 +182,6 @@ jobs:
       - name: Save packages as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: copy packages
+          name: tahtiOS-packages
           path: |
             ${{ github.workspace }}/*tar.gz
