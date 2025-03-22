@@ -166,7 +166,7 @@ jobs:
             cp *tar.gz /workspace
             cd ../.. &&
             git clone --depth 1 https://invent.kde.org/education/kstars.git &&
-            	git switch -d --discard-changes ${{ needs.check.outputs.version.KStars }} &&
+            	git switch -d --discard-changes ${{ needs.check.outputs.version.KStars }}
             mkdir kstars/build && cd kstars/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake .. -DCMAKE_BUILD_TYPE=Release  -DBUILD_TESTING=OFF -DBUILD_DOC=OFF -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=KStars DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionKStars }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
