@@ -118,7 +118,8 @@ jobs:
             libboost-regex-dev \
             libcurl4-gnutls-dev \
             libtheora-dev \
-            libboost-dev libboost-regex-dev librtlsdr-dev liblimesuite-dev libftdi1-dev libavcodec-dev libavdevice-dev &&
+            libboost-dev libboost-regex-dev librtlsdr-dev liblimesuite-dev libftdi1-dev libavcodec-dev libavdevice-dev \
+            wcslib-dev &&
             git clone --depth 1 https://github.com/joxda/libXISF.git &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }}
             mkdir -p libXISF/build && cd libXISF/build &&
@@ -146,7 +147,7 @@ jobs:
             make -j$(nproc) &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
-            mkdir ../indi-3rd-party &&
+            mkdir ../indi-3rd-party && cd ../indi-3rd-party &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" ../.. &&
             make -j$(nproc) &&
             cpack -G TGZ &&
