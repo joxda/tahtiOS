@@ -32,9 +32,9 @@ jobs:
           echo "{" > new_releases.json
           NEEDS_UPDATE=false
           RAN=false
-          #if [ ! -f latest_releases.json ]; then
+          if [ ! -f latest_releases.json ]; then
             echo "{}" > latest_releases.json
-          #fi
+          fi
           cat latest_releases.json
           for repo in ${REPOS[*]}; do
             if [ "$RAN" = "true" ]; then
@@ -43,7 +43,7 @@ jobs:
             RAN=true
             echo "$repo"
             LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/releases/latest | jq -r .tag_name)
-            PREVIOUS_TAG=$(jq -r --arg rep "$repo" '.[$rep] // ""' latest_releases.json)
+            #PREVIOUS_TAG=$(jq -r --arg rep "$repo" '.[$rep] // ""' latest_releases.json)
             if [ -z "$LATEST_TAG" ]; then
               LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/tags | jq -r '.[0].name')
             fi
@@ -59,7 +59,7 @@ jobs:
             echo "    \"$repo\": \"$LATEST_TAG\"" >> new_releases.json
           done
           LATEST_TAG=$(git ls-remote -h https://invent.kde.org/kde/kstars.git | grep '\/stable-*' | tail -n1 | sed 's/\// /g' | awk '{print $4}')
-          PREVIOUS_TAG=$(jq -r --arg rep "kstars" '.[$rep] // ""' latest_releases.json)
+          #PREVIOUS_TAG=$(jq -r --arg rep "kstars" '.[$rep] // ""' latest_releases.json)
           echo -n "    \"kstars\": \"$LATEST_TAG\"" >> new_releases.json          
           echo "}" >> new_releases.json
 
