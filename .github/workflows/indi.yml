@@ -119,7 +119,8 @@ jobs:
             libcurl4-gnutls-dev \
             libtheora-dev \
             libboost-dev libboost-regex-dev librtlsdr-dev liblimesuite-dev libftdi1-dev libavcodec-dev libavdevice-dev \
-            wcslib-dev qtbase5-dev &&
+            wcslib-dev qtbase5-dev \
+            libeigen3-dev   extra-cmake-modules libkf5plotting-dev libqt5svg5-dev libkf5xmlgui-dev libkf5kio-dev kinit-dev libkf5newstuff-dev libkf5doctools-dev libkf5notifications-dev qtdeclarative5-dev libkf5crash-dev gettext libraw-dev libkf5notifyconfig-dev wcslib-dev libqt5websockets5-dev xplanet xplanet-images qt5keychain-dev libsecret-1-dev breeze-icon-theme libqt5datavisualization5-dev &&
             git clone --depth 1 https://github.com/joxda/libXISF.git &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }}
             mkdir -p libXISF/build && cd libXISF/build &&
@@ -142,19 +143,19 @@ jobs:
             cd ../..
             git clone --depth=1 https://github.com/indilib/indi-3rd-party.git &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionINDI3rdPARTY }}
-            mkdir -p indi-3rd-party/build/indi-lib/ && cd indi-3rd-party/build/indi-lib &&
-            echo 'include(CPack)' >> ../../CMakeLists.txt &&
-            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" ../.. &&
+            mkdir -p indi-3rd-party/build/ && cd indi-3rd-party/build &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
+            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
-            mkdir ../indi-3rd-party && cd ../indi-3rd-party &&
-            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" ../.. &&
+            mkdir ../build2 && cd ../build2 &&
+            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             make install &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
-            cd ../../.. &&
+            cd ../.. &&
             git clone --depth 1 https://github.com/rlancaste/stellarsolver.git &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionStellarSolver }}
             mkdir stellarsolver/build && cd stellarsolver/build &&
