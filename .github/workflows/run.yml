@@ -35,11 +35,13 @@ jobs:
           if [ ! -f latest_releases.json ]; then
             echo "{}" > latest_releases.json
           fi
+          cat latest_releases.json
           for repo in ${REPOS[*]}; do
             if [ "$RAN" = "true" ]; then
               echo "," >> new_releases.json
             fi
             RAN=true
+            echo "$repo"
             LATEST_TAG=$(curl -s https://api.github.com/repos/$repo/releases/latest | jq -r .tag_name)
             PREVIOUS_TAG=$(jq -r --arg rep "$repo" '.[$rep] // ""' latest_releases.json)
             if [ -z "$LATEST_TAG" ]; then
