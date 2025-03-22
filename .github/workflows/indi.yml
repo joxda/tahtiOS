@@ -87,7 +87,7 @@ jobs:
         run: |
           docker pull dtcooper/raspberrypi-os:latest
 
-      - name: Build INDI inside Docker
+      - name: Build inside Docker
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace dtcooper/raspberrypi-os:latest bash -c "
             apt update &&
@@ -119,17 +119,26 @@ jobs:
             libcurl4-gnutls-dev \
             libtheora-dev \
             libboost-dev libboost-regex-dev librtlsdr-dev liblimesuite-dev libftdi1-dev libavcodec-dev libavdevice-dev &&
+            git clone --depth 1 https://github.com/joxda/libXISF.git &&
+            git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }} &&
+            mkdir -p libXISF/build &&
+            cmake .. -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=libXISF -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionLibXISF }} -DCPACK_PACKAGE_CONTACT="joxda@github" ..
+            make -j$(nproc) &&
+            make install &&
+            cpack -G TGZ &&
+            cp *tar.gz /workspace &&
+            cd ../.. &&
             git clone --depth=1 https://github.com/indilib/indi.git &&
-            git switch -d --discard-changes ${{ needs.check.outputs.versionINDI }}
+            git switch -d --discard-changes ${{ needs.check.outputs.versionINDI }} &&
             mkdir -p indi/build && cd indi/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             cpack -G TGZ &&
-            cp *tar.gz /workspace
+            cp *tar.gz /workspace &&
             cd ../.. &&
             git clone --depth=1 https://github.com/indilib/indi-3rd-party.git &&
-            git switch -d --discard-changes ${{ needs.check.outputs.versionINDI3rdPARTY }}
+            git switch -d --discard-changes ${{ needs.check.outputs.versionINDI3rdPARTY }} &&
             mkdir -p indi-3rd-party/build/indi-lib/ && cd indi-3rd-party/build/indi-lib &&
             echo 'include(CPack)' >> ../../CMakeLists.txt &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" ../.. &&
@@ -140,11 +149,20 @@ jobs:
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" ../.. &&
             make -j$(nproc) &&
             cpack -G TGZ &&
+            cp *tar.gz /workspace &&
+            cd ../../.. &&
+            git clone --depth 1 https://github.com/rlancaste/stellarsolver.git &&
+            git switch -d --discard-changes ${{ needs.check.outputs.versionStellarSolver }} &&
+            mkdir stellarsolver/build && cd stellarsolver/build &&
+            echo 'include(CPack)' >> ../../CMakeLists.txt &&
+            cmake .. -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=StellarSolver -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionStellarSolver }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
+            make -j$(nproc) &&
+            cpack -G TGZ &&
             cp *tar.gz /workspace
           "
-      - name: Save INDI binaries as artifacts
+      - name: Save packages as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: indi-binaries
+          name: copy packages
           path: |
             ${{ github.workspace }}/*tar.gz
