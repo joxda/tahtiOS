@@ -155,7 +155,7 @@ jobs:
             git clone --depth 1 https://github.com/rlancaste/stellarsolver.git &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionStellarSolver }} &&
             mkdir stellarsolver/build && cd stellarsolver/build &&
-            echo 'include(CPack)' >> ../../CMakeLists.txt &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake .. -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=StellarSolver -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionStellarSolver }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
             make -j$(nproc) &&
             cpack -G TGZ &&
