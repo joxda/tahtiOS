@@ -53,7 +53,7 @@ jobs:
             mkdir -p indi/build && cd indi/build &&
             cmake -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=1.0.0 -DCPACK_PACKAGE_CONTACT="YourEmail@example.com" .. &&
             make -j$(nproc) &&
-            cpack &&
+            cpack -G TGZ &&
             cp *tgz /workspace
           "
 
