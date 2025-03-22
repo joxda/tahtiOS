@@ -121,7 +121,8 @@ jobs:
             libboost-dev libboost-regex-dev librtlsdr-dev liblimesuite-dev libftdi1-dev libavcodec-dev libavdevice-dev &&
             git clone --depth 1 https://github.com/joxda/libXISF.git &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }} &&
-            mkdir -p libXISF/build &&
+            mkdir -p libXISF/build && cd libXISF/build &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake .. -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=libXISF -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionLibXISF }} -DCPACK_PACKAGE_CONTACT="joxda@github" ..
             make -j$(nproc) &&
             make install &&
