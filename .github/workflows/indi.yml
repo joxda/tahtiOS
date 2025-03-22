@@ -119,7 +119,7 @@ jobs:
             libcurl4-gnutls-dev \
             libtheora-dev \
             libboost-dev libboost-regex-dev librtlsdr-dev liblimesuite-dev libftdi1-dev libavcodec-dev libavdevice-dev \
-            wcslib-dev &&
+            wcslib-dev qtbase5-dev &&
             git clone --depth 1 https://github.com/joxda/libXISF.git &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }}
             mkdir -p libXISF/build && cd libXISF/build &&
