@@ -136,6 +136,7 @@ jobs:
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
+            make install &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
             cd ../..
@@ -150,6 +151,7 @@ jobs:
             mkdir ../indi-3rd-party && cd ../indi-3rd-party &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" ../.. &&
             make -j$(nproc) &&
+            make install &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
             cd ../../.. &&
@@ -158,6 +160,16 @@ jobs:
             mkdir stellarsolver/build && cd stellarsolver/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake .. -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=StellarSolver -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionStellarSolver }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
+            make -j$(nproc) &&
+            make install &&
+            cpack -G TGZ &&
+            cp *tar.gz /workspace
+            cd ../.. &&
+            git clone --depth 1 https://invent.kde.org/education/kstars.git &&
+            	git switch -d --discard-changes ${{ needs.check.outputs.version.KStars }} &&
+            mkdir kstars/build && cd kstars/build &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
+            cmake .. -DCMAKE_BUILD_TYPE=Release  -DBUILD_TESTING=OFF -DBUILD_DOC=OFF -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=KStars DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionKStars }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
             make -j$(nproc) &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
