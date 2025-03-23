@@ -7,7 +7,9 @@ ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 cd /usr/local/tahti
-tar xzvf *tar.gz -C /
+for file in *.tar.gz; do
+    tar xzvf "$file" -C /
+done
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
 #echo "cmake_minimum_required(VERSION 3.0)" > CMakeLists.txt
