@@ -145,10 +145,10 @@ jobs:
             cpack -G TGZ &&
             cp *tar.gz /workspace
             cd ../.. &&
-            git clone --depth=1 https://github.com/indilib/indi-3rd-party.git &&
+            git clone --depth=1 https://github.com/indilib/indi-3rdparty.git &&
             git fetch --tags &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionINDI3rdPARTY }}
-            mkdir -p indi-3rd-party/build && cd indi-3rd-party/build &&
+            mkdir -p indi-3rdparty/build && cd indi-3rdparty/build &&
             pwd && ls && ls .. &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
