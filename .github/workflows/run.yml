@@ -211,6 +211,8 @@ jobs:
         with:
           name: tahtiOS-packages
           path: stageT/01-tahti-setup/files/
+      - name: Display structure of downloaded files
+        run: ls -R stageT/01-tahti-setup/
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
         with:

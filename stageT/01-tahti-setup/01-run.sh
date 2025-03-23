@@ -2,7 +2,7 @@
 set -ex
 echo "ROOTFS_DIR is set to: $ROOTFS_DIR"
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
-install -m 644 files/*zip ${ROOTFS_DIR}/usr/local/tahti
+install -m 644 files/*zip "${ROOTFS_DIR}/usr/local/tahti/"
 ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
