@@ -9,7 +9,7 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 cd /usr/local/tahti
 ls
 for file in *.tar.gz; do
-    tar xzvf "$file" -C /usr/
+    tar xzvf "$file" -C /usr/ --strip-components=1
 done
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
