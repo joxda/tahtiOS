@@ -73,16 +73,128 @@ jobs:
           if [ "$NEEDS_UPDATE" = "true" ]; then
             mv new_releases.json latest_releases.json            
           fi
+  compile:
+    needs: check
+    runs-on: ubuntu-24.04-arm # Use native ARM64 runner
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
+      - name: Ensure Docker is Running
+        run: |
+          sudo systemctl start docker || true
+          docker --version
+
+      - name: Pull Raspberry Pi OS Bookworm Docker
+        run: |
+          docker pull dtcooper/raspberrypi-os:latest
+
+      - name: Build inside Docker
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace dtcooper/raspberrypi-os:latest bash -c "
+            apt update &&
+            apt-get install -y \
+            git \
+            cdbs \
+            dkms \
+            cmake \
+            fxload \
+            libev-dev \
+            libgps-dev \
+            libgsl-dev \
+            libraw-dev \
+            libusb-dev \
+            zlib1g-dev \
+            libftdi-dev \
+            libjpeg-dev \
+            libkrb5-dev \
+            libnova-dev \
+            libtiff-dev \
+            libfftw3-dev \
+            librtlsdr-dev \
+            libcfitsio-dev \
+            libgphoto2-dev \
+            build-essential \
+            libusb-1.0-0-dev \
+            libdc1394-dev \
+            libboost-regex-dev \
+            libcurl4-gnutls-dev \
+            libtheora-dev \
+            libboost-dev libboost-regex-dev librtlsdr-dev liblimesuite-dev libftdi1-dev libavcodec-dev libavdevice-dev \
+            wcslib-dev qtbase5-dev \
+            libopencv-dev libeigen3-dev   extra-cmake-modules libkf5plotting-dev libqt5svg5-dev libkf5xmlgui-dev libkf5kio-dev kinit-dev libkf5newstuff-dev libkf5doctools-dev libkf5notifications-dev qtdeclarative5-dev libkf5crash-dev gettext libraw-dev libkf5notifyconfig-dev wcslib-dev libqt5websockets5-dev xplanet xplanet-images qt5keychain-dev libsecret-1-dev breeze-icon-theme libqt5datavisualization5-dev &&
+            git clone --depth 1 https://github.com/joxda/libXISF.git &&
+            git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }}
+            mkdir -p libXISF/build && cd libXISF/build &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
+            cmake -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=libXISF -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionLibXISF }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            make -j$(nproc) &&
+            make install &&
+            cpack -G TGZ &&
+            cp *tar.gz /workspace
+            cd ../.. &&
+            git clone --depth=1 https://github.com/indilib/indi.git &&
+            git fetch --tags &&
+            git switch -d --discard-changes ${{ needs.check.outputs.versionINDI }}
+            mkdir -p indi/build && cd indi/build &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
+            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            make -j$(nproc) &&
+            make install &&
+            cpack -G TGZ &&
+            cp *tar.gz /workspace
+            cd ../.. &&
+            git clone --depth=1 https://github.com/indilib/indi-3rd-party.git &&
+            git fetch --tags &&
+            git switch -d --discard-changes ${{ needs.check.outputs.versionINDI3rdPARTY }}
+            mkdir -p indi-3rd-party/build && cd indi-3rd-party/build &&
+            pwd && ls && ls .. &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
+            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            make -j$(nproc) &&
+            cpack -G TGZ &&
+            cp *tar.gz /workspace
+            mkdir ../build2 && cd ../build2 &&
+            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            make -j$(nproc) &&
+            cpack -G TGZ &&
+            cp *tar.gz /workspace
+            cd ../.. &&
+            git clone https://github.com/rlancaste/stellarsolver.git &&
+            git fetch --tags &&
+            git switch -d --discard-changes ${{ needs.check.outputs.versionStellarSolver }}
+            mkdir stellarsolver/build && cd stellarsolver/build &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
+            cmake .. -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=StellarSolver -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionStellarSolver }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
+            make -j$(nproc) &&
+            make install &&
+            cpack -G TGZ &&
+            cp *tar.gz /workspace
+            cd ../.. &&
+            git clone --depth 1 https://invent.kde.org/education/kstars.git &&
+            git fetch --tags &&
+            git switch -d --discard-changes ${{ needs.check.outputs.version.KStars }}
+            mkdir kstars/build && cd kstars/build &&
+            echo 'include(CPack)' >> ../CMakeLists.txt &&
+            cmake .. -DCMAKE_BUILD_TYPE=Release  -DBUILD_TESTING=OFF -DBUILD_DOC=OFF -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=KStars -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionKStars }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
+            make -j$(nproc) &&
+            cpack -G TGZ &&
+            cp *tar.gz /workspace
+          "
+      - name: Save packages as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tahtiOS-packages
+          path: |
+            ${{ github.workspace }}/*tar.gz
   dothings:
     name: Print the result from check
     runs-on: ubuntu-latest
     timeout-minutes: 1200
-    needs: check
+    needs: [check, compile]
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
-
       - name: Add Swap
         run: |
           sudo fallocate -l 8G /swapfile
@@ -92,7 +204,12 @@ jobs:
           ls
           sudo chmod +x stageT/prerun.sh
           sudo chmod +x stageT/01-*/0?-*.sh
-
+          mkdir stageT/01-tahti-setup/files
+      - name: Download custom data files
+        uses: actions/download-artifact@v4
+        with:
+          name: tahtiOS-packages
+          path: stageT/01-tahti-setup/files/
       - uses: usimd/pi-gen-action@v1
         id: pigenimage
         with:
