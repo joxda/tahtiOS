@@ -7,8 +7,9 @@ ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 cd /usr/local/tahti
+ls
 for file in *.tar.gz; do
-    tar xzvf "$file" -C /
+    tar xzvf "$file" -C /usr/
 done
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
