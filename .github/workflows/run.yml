@@ -153,6 +153,7 @@ jobs:
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake  -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
+            make install &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
             mkdir ../build2 && cd ../build2 &&
