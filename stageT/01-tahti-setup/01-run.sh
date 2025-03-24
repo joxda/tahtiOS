@@ -10,8 +10,8 @@ cd /usr/local/tahti
 ls
 ls /usr/
 for file in *.tar.gz; do
-    echo "$file"
-    tar xzvf "$file" -C /usr/ --strip-components=1
+    echo "This $file"
+    #tar xzvf "$file" -C /usr/ --strip-components=1
 done
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
