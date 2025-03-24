@@ -8,7 +8,8 @@ on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 cd /usr/local/tahti
 ls
-ls /usr/
+echo "here"
+echo *.tar.gz
 for file in *.tar.gz; do
     echo "This $file"
     #tar xzvf "$file" -C /usr/ --strip-components=1
