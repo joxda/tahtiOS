@@ -128,7 +128,7 @@ jobs:
             git switch -d --discard-changes ${{ needs.check.outputs.versionLibXISF }}
             mkdir -p libXISF/build && cd libXISF/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=libXISF -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionLibXISF }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            cmake -DCPACK_COMPONENTS_ALL=ALL -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=libXISF -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionLibXISF }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             make install &&
             cpack -G TGZ &&
@@ -139,7 +139,7 @@ jobs:
             git switch -d --discard-changes ${{ needs.check.outputs.versionINDI }}
             mkdir -p indi/build && cd indi/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            cmake -DCPACK_COMPONENTS_ALL=ALL -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             make install &&
             cpack -G TGZ &&
@@ -151,13 +151,13 @@ jobs:
             mkdir -p indi-3rdparty/build && cd indi-3rdparty/build &&
             pwd && ls && ls .. &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            cmake  -DCPACK_COMPONENTS_ALL=ALL -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             make install &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
             mkdir ../build2 && cd ../build2 &&
-            cmake  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            cmake  -DCPACK_COMPONENTS_ALL=ALL -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
@@ -167,7 +167,7 @@ jobs:
             git switch -d --discard-changes ${{ needs.check.outputs.versionStellarSolver }}
             mkdir stellarsolver/build && cd stellarsolver/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake .. -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=StellarSolver -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionStellarSolver }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
+            cmake .. -DCPACK_COMPONENTS_ALL=ALL -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF -DCMAKE_BUILD_TYPE=Release  -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=StellarSolver -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionStellarSolver }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
             make -j$(nproc) &&
             make install &&
             cpack -G TGZ &&
@@ -178,7 +178,7 @@ jobs:
             git switch -d --discard-changes ${{ needs.check.outputs.version.KStars }}
             mkdir kstars/build && cd kstars/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake .. -DCMAKE_BUILD_TYPE=Release  -DBUILD_TESTING=OFF -DBUILD_DOC=OFF -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=KStars -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionKStars }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
+            cmake .. -DCPACK_COMPONENTS_ALL=ALL -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF -DCMAKE_BUILD_TYPE=Release  -DBUILD_TESTING=OFF -DBUILD_DOC=OFF -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=KStars -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionKStars }} -DCPACK_PACKAGE_CONTACT="joxda@github"  &&
             make -j$(nproc) &&
             cpack -G TGZ &&
             cp *tar.gz /workspace

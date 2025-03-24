@@ -12,13 +12,13 @@ echo "here"
 echo *.tar.gz
 for file in *.tar.gz; do
     echo "This $file"
-    #tar xzvf "$file" -C /usr/ --strip-components=1
+    #tar xzvf "$file" -C /usr/
 done
-tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/ --strip-components=1
-tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/ --strip-components=1
-tar xzvf indi-lib-v*-Linux.tar.gz  -C /usr/ --strip-components=1
-tar xzvf indi-v*-Linux.tar.gz  -C /usr/ --strip-components=1
-tar xzvf libXISF-v*-Linux.tar.gz  -C /usr/ --strip-components=1
+tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
+tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
+tar xzvf indi-lib-v*-Linux.tar.gz  -C /usr/
+tar xzvf indi-v*-Linux.tar.gz  -C /usr/
+tar xzvf libXISF-v*-Linux.tar.gz  -C /usr/
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
 #echo "cmake_minimum_required(VERSION 3.0)" > CMakeLists.txt
