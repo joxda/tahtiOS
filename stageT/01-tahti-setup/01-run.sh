@@ -15,10 +15,17 @@ for file in *.tar.gz; do
     #tar xzvf "$file" -C /usr/
 done
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
+echo "TAR StellarSolver"
 tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
+echo "TAR indi-lib"
 tar xzvf indi-lib-v*-Linux.tar.gz  -C /usr/
+echo "TAR indi-3rd"
+tar xzvf indi-3rd*-v*-Linux.tar.gz  -C /usr/
+echo "TAR indi Devel"
 tar xzvf indi-v*-Linux-Devel.tar.gz  -C /usr/
+echo "TAR indi Unspec"
 tar xzvf indi-v*-Linux-Uns*.tar.gz  -C /usr/
+echo "TAR libXISF"
 tar xzvf libXISF-v*-Linux.tar.gz  -C /usr/
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
