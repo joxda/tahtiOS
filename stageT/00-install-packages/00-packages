@@ -76,4 +76,4 @@ pkg-config
 libwxgtk3.2-dev #(phd2)
 ninja-build
 iptables
-libzmq-dev
+libzmq3-dev
