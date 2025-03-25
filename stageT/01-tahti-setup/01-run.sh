@@ -17,7 +17,8 @@ done
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
 tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
 tar xzvf indi-lib-v*-Linux.tar.gz  -C /usr/
-tar xzvf indi-v*-Linux.tar.gz  -C /usr/
+tar xzvf indi-v*-Linux-Devel.tar.gz  -C /usr/
+tar xzvf indi-v*-Linux-Uns*.tar.gz  -C /usr/
 tar xzvf libXISF-v*-Linux.tar.gz  -C /usr/
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
