@@ -21,8 +21,8 @@ echo "TAR indi-lib"
 tar xzvf indi-lib-v*-Linux.tar.gz  -C /usr/
 echo "TAR indi-3rd"
 tar xzvf indi-3rd*-v*-Linux.tar.gz  -C /usr/
-echo "TAR indi Devel"
-tar xzvf indi-v*-Linux-Devel.tar.gz  -C /usr/
+#echo "TAR indi Devel"
+#tar xzvf indi-v*-Linux-Devel.tar.gz  -C /usr/
 echo "TAR indi Unspec"
 tar xzvf indi-v*-Linux.tar.gz  -C /usr/
 echo "TAR libXISF"
