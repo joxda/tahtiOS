@@ -142,7 +142,7 @@ jobs:
             cmake -DCPACK_ARCHIVE_COMPONENT_INSTALL=ON -DCPACK_COMPONENTS_ALL=Devel -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             make install &&
-            cpack -G TGZ &&
+            cpack -G TGZ  -DCPACK_ARCHIVE_COMPONENT_INSTALL=ON -DCPACK_COMPONENTS_ALL=Devel -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF &&
             cmake -DCPACK_ARCHIVE_COMPONENT_INSTALL=OFF -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             make install &&
