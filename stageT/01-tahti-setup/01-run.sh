@@ -24,7 +24,7 @@ tar xzvf indi-3rd*-v*-Linux.tar.gz  -C /usr/
 echo "TAR indi Devel"
 tar xzvf indi-v*-Linux-Devel.tar.gz  -C /usr/
 echo "TAR indi Unspec"
-tar xzvf indi-v*-Linux-Uns*.tar.gz  -C /usr/
+tar xzvf indi-v*-Linux-U*.tar.gz  -C /usr/
 echo "TAR libXISF"
 tar xzvf libXISF-v*-Linux.tar.gz  -C /usr/
 git clone https://github.com/joxda/astro-soft-build.git
