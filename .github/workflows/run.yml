@@ -139,11 +139,16 @@ jobs:
             git switch -d --discard-changes ${{ needs.check.outputs.versionINDI }}
             mkdir -p indi/build && cd indi/build &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake -DCPACK_ARCHIVE_COMPONENT_INSTALL=ON -DCPACK_COMPONENTS_ALL=Devel\;UNSPECIFIED -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            cmake -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            make -j$(nproc) &&
+            make install &&
+            cpack -G TGZ &&
+            cmake -DCPACK_ARCHIVE_COMPONENT_INSTALL=ON -DCPACK_COMPONENTS_ALL=Devel -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             make install &&
             cpack -G TGZ &&
             cp *tar.gz /workspace
+            ls /workspace
             cd ../.. &&
             git clone --depth=1 https://github.com/indilib/indi-3rdparty.git &&
             git fetch --tags &&
