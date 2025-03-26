@@ -7,13 +7,7 @@ ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 cd /usr/local/tahti
-ls
-echo "here"
 echo *.tar.gz
-for file in *.tar.gz; do
-    echo "This $file"
-    #tar xzvf "$file" -C /usr/
-done
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
 echo "TAR StellarSolver"
 tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
