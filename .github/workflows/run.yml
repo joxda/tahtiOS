@@ -137,17 +137,18 @@ jobs:
             git clone --depth=1 https://github.com/indilib/indi.git &&
             git fetch --tags &&
             git switch -d --discard-changes ${{ needs.check.outputs.versionINDI }}
-            mkdir -p indi/build && cd indi/build &&
-            cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .. &&
-            make -j$(nproc) &&
-            make install &&
-            mkdir ../build2 && cd ../build2
+            mkdir indi/build2 && cd indi/build2
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake -DCPACK_MONOLITHIC_INSTALL=ON -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             cpack -G TGZ -DCPACK_MONOLITHIC_INSTALL=ON -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF --verbose &&
             cp *tar.gz /workspace
             ls /workspace
+            cd ../..
+            mkdir -p indi/build && cd indi/build &&
+            cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release .. &&
+            make -j$(nproc) &&
+            make install 
             cd ../.. &&
             git clone --depth=1 https://github.com/indilib/indi-3rdparty.git &&
             git fetch --tags &&
