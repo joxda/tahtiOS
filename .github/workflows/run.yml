@@ -140,9 +140,11 @@ jobs:
             mkdir indi/build2 && cd indi/build2
             echo 'include(CPack)' >> ../CMakeLists.txt &&
             cmake -DCPACK_PACKAGING_INSTALL_PREFIX=/workspace/indipackage/ -DCPACK_MONOLITHIC_INSTALL=ON -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
-            make -j$(nproc) &&
+            ninja -j$(nproc) &&
             cpack -G TGZ -DCPACK_PACKAGING_INSTALL_PREFIX=/workspace/indipackage/ -DCPACK_MONOLITHIC_INSTALL=ON -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF --verbose &&
+            cpack -G DE  -DCPACK_PACKAGING_INSTALL_PREFIX=/workspace/indipackage/ -DCPACK_MONOLITHIC_INSTALL=ON -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF --verbose &&
             cp *tar.gz /workspace
+            cp *deb /workspace
             ls /workspace
             cd ../..
             mkdir -p indi/build && cd indi/build &&
@@ -194,6 +196,7 @@ jobs:
           name: tahtiOS-packages
           path: |
             ${{ github.workspace }}/*tar.gz
+            ${{ github.workspace }}/*deb
   dothings:
     name: Print the result from check
     runs-on: ubuntu-latest
