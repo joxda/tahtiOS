@@ -13,16 +13,16 @@ tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
 echo "TAR StellarSolver"
 tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
 echo "TAR indi-lib"
-tar xzvf indi-lib-v*-Linux.tar.gz  -C /usr/
+tar xzvf indi-lib-*-Linux.tar.gz  -C /usr/
 echo "TAR indi-3rd"
-tar xzvf indi-3rd*-v*-Linux.tar.gz  -C /usr/
+tar xzvf indi-3rd*-*-Linux.tar.gz  -C /usr/
 #echo "TAR indi Devel"
 #tar xzvf indi-v*-Linux-Devel.tar.gz  -C /usr/
 #echo "TAR indi Unspec"
 #tar xzvf indi-v*-Linux.tar.gz  -C /usr/
 apt install ./indi-*-Linux.deb
 echo "TAR libXISF"
-tar xzvf libXISF-v*-Linux.tar.gz  -C /usr/
+tar xzvf libXISF-*-Linux.tar.gz  -C /usr/
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
 #echo "cmake_minimum_required(VERSION 3.0)" > CMakeLists.txt
