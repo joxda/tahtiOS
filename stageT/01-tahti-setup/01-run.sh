@@ -3,6 +3,7 @@ set -ex
 echo "ROOTFS_DIR is set to: $ROOTFS_DIR"
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
+install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
@@ -17,8 +18,9 @@ echo "TAR indi-3rd"
 tar xzvf indi-3rd*-v*-Linux.tar.gz  -C /usr/
 #echo "TAR indi Devel"
 #tar xzvf indi-v*-Linux-Devel.tar.gz  -C /usr/
-echo "TAR indi Unspec"
-tar xzvf indi-v*-Linux.tar.gz  -C /usr/
+#echo "TAR indi Unspec"
+#tar xzvf indi-v*-Linux.tar.gz  -C /usr/
+apt install ./indi-*-Linux.deb
 echo "TAR libXISF"
 tar xzvf libXISF-v*-Linux.tar.gz  -C /usr/
 git clone https://github.com/joxda/astro-soft-build.git
