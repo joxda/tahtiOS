@@ -1,0 +1,90 @@
+name: "Package RPi image"
+description: "Packages an RPi image as a zip, generates a .md5 and .sha256 files for image and zip"
+inputs:
+  image_path:
+    description: "The path to the image file"
+    required: true
+outputs:
+  image_name:
+    description: "The name of the image"
+    value: "${{ steps.package-image.outputs.image }}"
+  image_sha256:
+    description: "The SHA256 sum of the image"
+    value: "${{ steps.package-image.outputs.image_sha256 }}"
+  image_size:
+    description: "The size of the image in bytes"
+    value: "${{ steps.package-image.outputs.image_size }}"
+  zip_name:
+    description: "The name of the packaged image zip"
+    value: "${{ steps.package-image.outputs.zip_name }}"
+  zip_path:
+    description: "The path of the package image zip"
+    value: "${{ steps.package-image.outputs.zip_path }}"
+  zip_sha256:
+    description: "The SHA256 sum of the packaged image zip"
+    value: "${{ steps.package-image.outputs.zip_sha256 }}"
+  zip_size:
+    description: "The size of the packaged image zip in bytes"
+    value: "${{ steps.package-image.outputs.zip_size }}"
+runs:
+  using: "composite"
+  steps:
+    - name: "📦 Package image"
+      id: package-image
+      run: |
+        sudo apt-get install qemu-utils
+
+        IMAGE_PATH="${{ inputs.image_path }}"
+
+        FOLDER=$(dirname "$IMAGE_PATH")
+        INIMAGE=$(basename "$IMAGE_PATH")
+        IMAGE="${INIMAGE%.*}_red.img
+        ZIP="${IMAGE%.*}.xz"
+        ZIP_PATH="${IMAGE_PATH%.*}.xz"
+
+        cd $FOLDER
+
+        # md5, sha256 and size of the image
+        qemu-img convert -O raw -sparse $INIMAGE $IMAGE
+
+        echo "Calculating checksums of $IMAGE..."
+
+        md5sum $IMAGE > $IMAGE.md5
+        sha256sum $IMAGE > $IMAGE.sha256
+
+        IMAGE_SHA256=`cat $IMAGE.sha256 | cut -d ' ' -f 1`
+        IMAGE_SIZE=`stat -c %s $IMAGE`
+
+        echo "IMAGE_SHA256: $IMAGE_SHA256"
+        echo "IMAGE_SIZE: $IMAGE_SIZE"
+
+        # zip the image
+
+        echo "Zipping $IMAGE to $ZIP..."
+
+        xz -z -9 $ZIP $IMAGE
+
+        # md5, sha256 and size of the zip
+
+        echo "Calculating checksums of $ZIP..."
+
+        md5sum $ZIP > $ZIP.md5
+        sha256sum $ZIP > $ZIP.sha256
+
+        ZIP_SHA256=`cat $ZIP.sha256 | cut -d ' ' -f 1`
+        ZIP_SIZE=`stat -c %s $ZIP`
+
+        echo "ZIP_SHA256: $ZIP_SHA256"
+        echo "ZIP_SIZE: $ZIP_SIZE"
+
+        # outputs
+        
+        
+        echo "image_name=$IMAGE" >> $GITHUB_OUTPUT
+        echo "image_sha256=$IMAGE_SHA256" >> $GITHUB_OUTPUT
+        echo "image_size=$IMAGE_SIZE" >> $GITHUB_OUTPUT
+        echo "zip_name=$ZIP" >> $GITHUB_OUTPUT
+        echo "zip_path=$ZIP_PATH" >> $GITHUB_OUTPUT
+        echo "zip_sha256=$ZIP_SHA256" >> $GITHUB_OUTPUT
+        echo "zip_size=$ZIP_SIZE" >> $GITHUB_OUTPUT
+      shell: bash
