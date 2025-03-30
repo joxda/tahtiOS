@@ -278,7 +278,7 @@ jobs:
           EOF
       - name: "Package the image"
         id: package-image
-        uses: OctoPrint/actions/package-rpi-image@main
+        uses: ./.github/actions/packageImage
         with:
           image_path: "${{ steps.pigenimage.outputs.image-path }}"
           zip_path: "${{ github.workspace }}/build/"
