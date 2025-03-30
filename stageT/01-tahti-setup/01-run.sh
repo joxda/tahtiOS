@@ -35,4 +35,17 @@ chmod +x *.sh
 ./build-more.sh
 ./installPythonRelated.sh
 ./extra-setup.sh
+
+sudo apt-get clean
+sudo rm -rf /var/log/*
+sudo rm -rf /tmp/*
+sudo rm -rf /var/tmp/*
+sudo apt-get autoremove
+rm /usr/local/tahti/*gz
+rm /usr/local/tahti/*deb
+
+
+
+
+
 EOF
