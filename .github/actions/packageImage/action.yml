@@ -44,7 +44,7 @@ runs:
         wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
         chmod +x pishrink.sh
         # md5, sha256 and size of the image
-        ./pishrink.sh $IMAGE
+        sudo ./pishrink.sh $IMAGE
 
         echo "Calculating checksums of $IMAGE..."
 
