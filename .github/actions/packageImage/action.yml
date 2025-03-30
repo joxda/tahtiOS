@@ -32,10 +32,6 @@ runs:
     - name: "📦 Package image"
       id: package-image
       run: |
-        wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
-        chmod +x pishrink.sh
-
-
         IMAGE_PATH="${{ inputs.image_path }}"
 
         FOLDER=$(dirname "$IMAGE_PATH")
@@ -45,7 +41,8 @@ runs:
         ZIP_PATH="${IMAGE_PATH%.*}.xz"
 
         cd $FOLDER
-
+        wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
+        chmod +x pishrink.sh
         # md5, sha256 and size of the image
         ./pishrink.sh $IMAGE
 
