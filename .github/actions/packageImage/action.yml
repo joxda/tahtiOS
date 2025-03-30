@@ -38,7 +38,7 @@ runs:
 
         FOLDER=$(dirname "$IMAGE_PATH")
         INIMAGE=$(basename "$IMAGE_PATH")
-        IMAGE="${INIMAGE%.*}_red.img
+        IMAGE="${INIMAGE%.*}_red.img"
         ZIP="${IMAGE%.*}.xz"
         ZIP_PATH="${IMAGE_PATH%.*}.xz"
 
