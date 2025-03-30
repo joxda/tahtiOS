@@ -32,20 +32,22 @@ runs:
     - name: "📦 Package image"
       id: package-image
       run: |
-        sudo apt-get install qemu-utils
+        wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
+        chmod +x pishrink.sh
+
 
         IMAGE_PATH="${{ inputs.image_path }}"
 
         FOLDER=$(dirname "$IMAGE_PATH")
-        INIMAGE=$(basename "$IMAGE_PATH")
-        IMAGE="${INIMAGE%.*}_red.img"
+        IMAGE=$(basename "$IMAGE_PATH")
+
         ZIP="${IMAGE%.*}.xz"
         ZIP_PATH="${IMAGE_PATH%.*}.xz"
 
         cd $FOLDER
 
         # md5, sha256 and size of the image
-        qemu-img convert -O raw -sparse $INIMAGE $IMAGE
+        ./pishrink.sh $IMAGE
 
         echo "Calculating checksums of $IMAGE..."
 
