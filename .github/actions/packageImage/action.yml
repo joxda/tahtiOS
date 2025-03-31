@@ -61,7 +61,7 @@ runs:
 
         echo "Zipping $IMAGE to $ZIP..."
 
-        xz -z -9 $ZIP $IMAGE
+        xz -z -9  $IMAGE $ZIP
 
         # md5, sha256 and size of the zip
 
