@@ -37,8 +37,8 @@ runs:
         FOLDER=$(dirname "$IMAGE_PATH")
         IMAGE=$(basename "$IMAGE_PATH")
 
-        ZIP="${IMAGE%.*}.xz"
-        ZIP_PATH="${IMAGE_PATH%.*}.xz"
+        ZIP="${IMAGE}.xz"
+        ZIP_PATH="${IMAGE_PATH}.xz"
 
         cd $FOLDER
         wget https://raw.githubusercontent.com/Drewsif/PiShrink/master/pishrink.sh
@@ -61,7 +61,7 @@ runs:
 
         echo "Zipping $IMAGE to $ZIP..."
 
-        xz -z -9  $IMAGE $ZIP
+        xz -z -9  $IMAGE
 
         # md5, sha256 and size of the zip
 
