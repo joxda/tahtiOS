@@ -77,3 +77,4 @@ libwxgtk3.2-dev #(phd2)
 ninja-build
 iptables
 libzmq3-dev
+libaml0 libneatvnc0 wayvnc

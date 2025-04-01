@@ -2,8 +2,10 @@
 set -ex
 echo "ROOTFS_DIR is set to: $ROOTFS_DIR"
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
+install -v -d "${ROOTFS_DIR}/var/log/nginx "
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
+install -m 644 files/error.log"${ROOTFS_DIR}/var/log/nginx/"
 ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
@@ -35,7 +37,7 @@ chmod +x *.sh
 ./build-more.sh
 ./installPythonRelated.sh
 ./extra-setup.sh
-
+sudo rm -f /etc/nginx/sites-enabled/default
 sudo apt-get clean
 sudo rm -rf /var/log/*
 sudo rm -rf /tmp/*
