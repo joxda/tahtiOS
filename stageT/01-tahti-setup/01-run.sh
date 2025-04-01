@@ -5,7 +5,7 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -v -d "${ROOTFS_DIR}/var/log/nginx "
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
-install -m 644 files/error.log"${ROOTFS_DIR}/var/log/nginx/"
+install -m 644 files/error.log "${ROOTFS_DIR}/var/log/nginx/"
 ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
