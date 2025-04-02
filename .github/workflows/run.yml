@@ -215,7 +215,6 @@ jobs:
           sudo chmod +x stageT/prerun.sh
           sudo chmod +x stageT/01-*/0?-*.sh
           mkdir stageT/01-tahti-setup/files
-          echo "" > stageT/01-tahti-setup/files/error.log
       - name: Download custom data files
         uses: actions/download-artifact@v4
         with:
@@ -252,7 +251,7 @@ jobs:
           pubkey-ssh-first-user: ""
           release: bookworm
           setfcap: ""
-          stage-list: stage0 stage1 stage2 stage3 ./stageT
+          stage-list: stage0 stage1 stage2 stage3 staget4 stage5 ./stageT
           timezone: Europe/London
           username: tahti
           verbose-output: true
