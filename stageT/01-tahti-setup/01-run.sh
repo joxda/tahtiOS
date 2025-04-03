@@ -38,7 +38,7 @@ chmod +x *.sh
 ./installPythonRelated.sh
 ./extra-setup.sh
 cd /usr/share
-git clone --branch --depth 1 v1.6.0 https://github.com/novnc/noVNC.git
+git clone --branch v1.6.0 --depth 1 https://github.com/novnc/noVNC.git
 cd /usr/local/tahti/repos/
 git clone --depth 1 https://github.com/joxda/libXISF.git
 git clone --depth 1 https://github.com/indilib/indi.git
