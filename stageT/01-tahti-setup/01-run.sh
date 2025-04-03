@@ -2,13 +2,13 @@
 set -ex
 echo "ROOTFS_DIR is set to: $ROOTFS_DIR"
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
-install -v -d "${ROOTFS_DIR}/var/log/nginx "
+install -v -d "${ROOTFS_DIR}/var/log/nginx"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
-install -v -d "${ROOTFS_DIR}/var/log/nginx "
+install -v -d "${ROOTFS_DIR}/var/log/nginx"
 cd /usr/local/tahti
 echo *.tar.gz
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
@@ -37,6 +37,21 @@ chmod +x *.sh
 ./build-more.sh
 ./installPythonRelated.sh
 ./extra-setup.sh
+cd /usr/share
+sudo git clone --branch v1.6.0 https://github.com/novnc/noVNC.git
+cd /usr/local/tahti/repos/
+git clone --depth 1 https://github.com/joxda/libXISF.git
+git clone --depth=1 https://github.com/indilib/indi.git
+git clone --depth=1 https://github.com/indilib/indi-3rdparty.git
+git clone --depth=1 https://github.com/rlancaste/stellarsolver.git 
+git clone --depth 1 https://invent.kde.org/education/kstars.git
+systemctl stop userconfig
+systemctl disable userconfig
+systemctl mask userconfig
+sudo raspi-config nonint do_boot_behaviour B3
+#sudo raspi-config nonint do_vnc_resolution <width>x<height>
+sudo raspi-config nonintdo_wayland W2
+sudo raspi-config nonint do_vnc 0
 sudo rm -f /etc/nginx/sites-enabled/default
 sudo apt-get clean
 sudo rm -rf /var/log/*

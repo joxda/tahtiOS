@@ -228,7 +228,7 @@ jobs:
           apt-proxy: ""
           compression: none
           compression-level: 6
-          disable-first-boot-user-rename: 0
+          disable-first-boot-user-rename: 1
           docker-opts: ""
           enable-noobs: false
           enable-ssh: 1
