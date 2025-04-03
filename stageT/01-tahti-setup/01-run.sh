@@ -38,31 +38,25 @@ chmod +x *.sh
 ./installPythonRelated.sh
 ./extra-setup.sh
 cd /usr/share
-sudo git clone --branch v1.6.0 https://github.com/novnc/noVNC.git
+git clone --branch --depth 1 v1.6.0 https://github.com/novnc/noVNC.git
 cd /usr/local/tahti/repos/
 git clone --depth 1 https://github.com/joxda/libXISF.git
-git clone --depth=1 https://github.com/indilib/indi.git
-git clone --depth=1 https://github.com/indilib/indi-3rdparty.git
-git clone --depth=1 https://github.com/rlancaste/stellarsolver.git 
+git clone --depth 1 https://github.com/indilib/indi.git
+git clone --depth 1 https://github.com/indilib/indi-3rdparty.git
+git clone --depth 1 https://github.com/rlancaste/stellarsolver.git 
 git clone --depth 1 https://invent.kde.org/education/kstars.git
-systemctl stop userconfig
 systemctl disable userconfig
 systemctl mask userconfig
-sudo raspi-config nonint do_boot_behaviour B3
-#sudo raspi-config nonint do_vnc_resolution <width>x<height>
-sudo raspi-config nonintdo_wayland W2
-sudo raspi-config nonint do_vnc 0
-sudo rm -f /etc/nginx/sites-enabled/default
-sudo apt-get clean
-sudo rm -rf /var/log/*
-sudo rm -rf /tmp/*
-sudo rm -rf /var/tmp/*
-sudo apt-get autoremove
+raspi-config nonint do_boot_behaviour B3
+#raspi-config nonint do_vnc_resolution <width>x<height>
+raspi-config nonintdo_wayland W2
+raspi-config nonint do_vnc 0
+rm -f /etc/nginx/sites-enabled/default
+apt-get clean
+rm -rf /var/log/*
+rm -rf /tmp/*
+rm -rf /var/tmp/*
+apt-get autoremove
 rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
-
-
-
-
-
 EOF
