@@ -60,3 +60,4 @@ apt-get autoremove
 rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
 EOF
+rm files/*

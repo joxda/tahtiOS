@@ -55,7 +55,7 @@ pkg-config
 libev-dev
 libqt5datavisualization5-dev
 libzmq3-dev
-emacs
+#emacs
 libopencv-dev
 python3-opencv
 gpredict
@@ -73,6 +73,6 @@ ffmpeg
 pkg-config
 # lazarus-ide #(astap)
 libwxgtk3.2-dev #(phd2)
-ninja-build
+#ninja-build
 iptables
 libzmq3-dev
