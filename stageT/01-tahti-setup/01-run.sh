@@ -47,10 +47,10 @@ git clone --depth 1 https://github.com/rlancaste/stellarsolver.git
 git clone --depth 1 https://invent.kde.org/education/kstars.git
 systemctl disable userconfig
 systemctl mask userconfig
-raspi-config nonint do_boot_behaviour B3
+SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_boot_behaviour B3
 #raspi-config nonint do_vnc_resolution <width>x<height>
-raspi-config nonintdo_wayland W2
-raspi-config nonint do_vnc 0
+SUDO_USER="${FIRST_USER_NAME}" raspi-config nonintdo_wayland W2
+SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_vnc 0
 rm -f /etc/nginx/sites-enabled/default
 apt-get clean
 rm -rf /var/log/*

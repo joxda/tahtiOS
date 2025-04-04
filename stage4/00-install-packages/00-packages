@@ -1,0 +1,14 @@
+python3-tk
+python3-pgzero
+python3-serial
+raspberrypi-net-mods raspberrypi-ui-mods
+python3-pip
+python3-numpy
+rc-gui
+tree
+libgl1-mesa-dri libgles1 libgles2-mesa xcompmgr
+piclone
+python3-flask
+pprompt
+ffmpeg
+
