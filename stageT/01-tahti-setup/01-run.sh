@@ -52,11 +52,10 @@ SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_boot_behaviour B3
 SUDO_USER="${FIRST_USER_NAME}" raspi-config nonintdo_wayland W2
 SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_vnc 0
 rm -f /etc/nginx/sites-enabled/default
-apt-get clean
 rm -rf /var/log/*
 rm -rf /tmp/*
 rm -rf /var/tmp/*
-apt-get autoremove
+apt-get -y autoremove && apt-get -y clean
 rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
 EOF
