@@ -34,47 +34,53 @@ cd astro-soft-build
 chmod +x *.sh
 #bash build-fxload.sh
 #./build-soft.sh #phd2
-./build-more.sh
-./installPythonRelated.sh
+SUDO_USER="${FIRST_USER_NAME}" ./build-more.sh
+SUDO_USER="${FIRST_USER_NAME}" ./installPythonRelated.sh
 ./extra-setup.sh
 cd /usr/share
 git clone --branch v1.6.0 --depth 1 https://github.com/novnc/noVNC.git
 cd /usr/local/tahti/repos/
 
-git clone --filter=blob:none --no-checkout https://github.com/joxda/libXISF.git
+SUDO_USER="${FIRST_USER_NAME}" git clone --filter=blob:none --no-checkout https://github.com/joxda/libXISF.git
 cd libXISF
 git sparse-checkout init --cone
 git sparse-checkout set README.md LICENSE
 git checkout master
 git sparse-checkout set --cone ""
 cd ..
-git clone --filter=blob:none --no-checkout https://github.com/indilib/indi.git
+SUDO_USER="${FIRST_USER_NAME}" git clone --filter=blob:none --no-checkout https://github.com/indilib/indi.git
 cd indi
 git sparse-checkout init --cone
 git sparse-checkout set README.md LICENSE
 git checkout master
 git sparse-checkout set --cone ""
 cd ..
-git clone --filter=blob:none --no-checkout https://github.com/indilib/indi-3rdparty.git
+SUDO_USER="${FIRST_USER_NAME}" git clone --filter=blob:none --no-checkout https://github.com/indilib/indi-3rdparty.git
 cd indi-3rdparty
 git sparse-checkout init --cone
 git sparse-checkout set README.md LICENSE
 git checkout master
 git sparse-checkout set --cone ""
 cd ..
-git clone --filter=blob:none --no-checkout https://github.com/rlancaste/stellarsolver.git 
+SUDO_USER="${FIRST_USER_NAME}" git clone --filter=blob:none --no-checkout https://github.com/rlancaste/stellarsolver.git 
 cd stellarsolver
 git sparse-checkout init --cone
 git sparse-checkout set README.md LICENSE
 git checkout master
 git sparse-checkout set --cone ""
 cd ..
-git clone --filter=blob:none --no-checkout https://invent.kde.org/education/kstars.git
+SUDO_USER="${FIRST_USER_NAME}" git clone --filter=blob:none --no-checkout https://invent.kde.org/education/kstars.git
 cd kstars
 git sparse-checkout init --cone
 git sparse-checkout set README.md LICENSE
 git checkout master
 git sparse-checkout set --cone ""
+cd ..
+git clone --depth 1 https://github.com/rkaczorek/astroberry-server-sysmod.git
+cd astroberry-server-sysmod
+cmake .
+make
+make install
 cd ..
 systemctl disable userconfig
 systemctl mask userconfig
