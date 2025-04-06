@@ -44,37 +44,37 @@ cd /usr/local/tahti/repos/
 git clone --filter=blob:none --no-checkout https://github.com/joxda/libXISF.git
 cd libXISF
 git sparse-checkout init --cone
-git sparse-checkout set src README.md LICENSE
+git sparse-checkout set README.md LICENSE
 git checkout master
-git sparse-checkout disable
+git sparse-checkout set --cone ""
 cd ..
 git clone --filter=blob:none --no-checkout https://github.com/indilib/indi.git
 cd indi
 git sparse-checkout init --cone
-git sparse-checkout set src README.md LICENSE
+git sparse-checkout set README.md LICENSE
 git checkout master
-git sparse-checkout disable
+git sparse-checkout set --cone ""
 cd ..
 git clone --filter=blob:none --no-checkout https://github.com/indilib/indi-3rdparty.git
 cd indi-3rdparty
 git sparse-checkout init --cone
-git sparse-checkout set src README.md LICENSE
+git sparse-checkout set README.md LICENSE
 git checkout master
-git sparse-checkout disable
+git sparse-checkout set --cone ""
 cd ..
 git clone --filter=blob:none --no-checkout https://github.com/rlancaste/stellarsolver.git 
 cd stellarsolver
 git sparse-checkout init --cone
-git sparse-checkout set src README.md LICENSE
+git sparse-checkout set README.md LICENSE
 git checkout master
-git sparse-checkout disable
+git sparse-checkout set --cone ""
 cd ..
 git clone --filter=blob:none --no-checkout https://invent.kde.org/education/kstars.git
 cd kstars
 git sparse-checkout init --cone
-git sparse-checkout set src README.md LICENSE
+git sparse-checkout set README.md LICENSE
 git checkout master
-git sparse-checkout disable
+git sparse-checkout set --cone ""
 cd ..
 systemctl disable userconfig
 systemctl mask userconfig

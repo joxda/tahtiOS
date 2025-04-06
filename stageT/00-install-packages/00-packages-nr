@@ -69,7 +69,6 @@ swig
 websockify
 nginx
 ufw
-ffmpeg
 pkg-config
 # lazarus-ide #(astap)
 libwxgtk3.2-dev #(phd2)
