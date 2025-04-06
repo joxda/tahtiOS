@@ -78,9 +78,9 @@ git sparse-checkout set --cone ""
 cd ..
 systemctl disable userconfig
 systemctl mask userconfig
-SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_boot_behaviour B3
+SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_boot_behaviour B4
 #raspi-config nonint do_vnc_resolution <width>x<height>
-SUDO_USER="${FIRST_USER_NAME}" raspi-config nonintdo_wayland W2
+SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_wayland W2
 SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_vnc 0
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
