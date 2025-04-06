@@ -43,35 +43,35 @@ cd /usr/local/tahti/repos/
 
 git clone --filter=blob:none --no-checkout https://github.com/joxda/libXISF.git
 cd libXISF
-git spare-checkout init --cone
+git sparse-checkout init --cone
 git sparse-checkout set src README.md LICENSE
 git checkout master
 git sparse-checkout disable
 cd ..
 git clone --filter=blob:none --no-checkout https://github.com/indilib/indi.git
 cd indi
-git spare-checkout init --cone
+git sparse-checkout init --cone
 git sparse-checkout set src README.md LICENSE
 git checkout master
 git sparse-checkout disable
 cd ..
 git clone --filter=blob:none --no-checkout https://github.com/indilib/indi-3rdparty.git
 cd indi-3rdparty
-git spare-checkout init --cone
+git sparse-checkout init --cone
 git sparse-checkout set src README.md LICENSE
 git checkout master
 git sparse-checkout disable
 cd ..
 git clone --filter=blob:none --no-checkout https://github.com/rlancaste/stellarsolver.git 
 cd stellarsolver
-git spare-checkout init --cone
+git sparse-checkout init --cone
 git sparse-checkout set src README.md LICENSE
 git checkout master
 git sparse-checkout disable
 cd ..
 git clone --filter=blob:none --no-checkout https://invent.kde.org/education/kstars.git
 cd kstars
-git spare-checkout init --cone
+git sparse-checkout init --cone
 git sparse-checkout set src README.md LICENSE
 git checkout master
 git sparse-checkout disable
