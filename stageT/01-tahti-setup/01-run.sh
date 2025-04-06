@@ -40,11 +40,42 @@ chmod +x *.sh
 cd /usr/share
 git clone --branch v1.6.0 --depth 1 https://github.com/novnc/noVNC.git
 cd /usr/local/tahti/repos/
-git clone --depth 1 https://github.com/joxda/libXISF.git
-git clone --depth 1 https://github.com/indilib/indi.git
-git clone --depth 1 https://github.com/indilib/indi-3rdparty.git
-git clone --depth 1 https://github.com/rlancaste/stellarsolver.git 
-git clone --depth 1 https://invent.kde.org/education/kstars.git
+
+git clone --filter=blob:none --no-checkout https://github.com/joxda/libXISF.git
+cd libXISF
+git spare-checkout init --cone
+git sparse-checkout set src README.md LICENSE
+git checkout master
+git sparse-checkout disable
+cd ..
+git clone --filter=blob:none --no-checkout https://github.com/indilib/indi.git
+cd indi
+git spare-checkout init --cone
+git sparse-checkout set src README.md LICENSE
+git checkout master
+git sparse-checkout disable
+cd ..
+git clone --filter=blob:none --no-checkout https://github.com/indilib/indi-3rdparty.git
+cd indi-3rdparty
+git spare-checkout init --cone
+git sparse-checkout set src README.md LICENSE
+git checkout master
+git sparse-checkout disable
+cd ..
+git clone --filter=blob:none --no-checkout https://github.com/rlancaste/stellarsolver.git 
+cd stellarsolver
+git spare-checkout init --cone
+git sparse-checkout set src README.md LICENSE
+git checkout master
+git sparse-checkout disable
+cd ..
+git clone --filter=blob:none --no-checkout https://invent.kde.org/education/kstars.git
+cd kstars
+git spare-checkout init --cone
+git sparse-checkout set src README.md LICENSE
+git checkout master
+git sparse-checkout disable
+cd ..
 systemctl disable userconfig
 systemctl mask userconfig
 SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_boot_behaviour B3
