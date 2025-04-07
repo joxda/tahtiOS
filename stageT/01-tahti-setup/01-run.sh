@@ -76,18 +76,17 @@ git sparse-checkout set README.md LICENSE
 git checkout master
 git sparse-checkout set --cone ""
 cd ..
-git clone --depth 1 https://github.com/rkaczorek/astroberry-server-sysmod.git
-cd astroberry-server-sysmod
-cmake .
-make
-make install
-cd ..
 systemctl disable userconfig
 systemctl mask userconfig
-SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_boot_behaviour B4
-#raspi-config nonint do_vnc_resolution <width>x<height>
-SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_wayland W2
-SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_vnc 0
+systemctl enable wayvnc
+systemctl --quiet set-default graphical.target
+sed /etc/lightdm/lightdm.conf -i -e "s/^\(#\|\)autologin-user=.*/autologin-user=$FIRST_USER_NAME/"
+sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?user-session.*/user-session=LXDE-pi-labwc/"
+sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?autologin-session.*/autologin-session=LXDE-pi-labwc/"
+sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?greeter-session.*/greeter-session=pi-greeter-labwc/"
+sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-test.*/#fallback-test=/"
+sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-session.*/#fallback-session=/"
+sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-greeter.*/#fallback-greeter=/"
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
 rm -rf /tmp/*
