@@ -9,6 +9,7 @@ ls $ROOTFS_DIR/usr/local/
 on_chroot <<EOF
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -v -d "${ROOTFS_DIR}/var/log/nginx"
+mkdir -p /var/log/nginx
 cd /usr/local/tahti
 echo *.tar.gz
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
@@ -78,7 +79,6 @@ git sparse-checkout set --cone ""
 cd ..
 systemctl disable userconfig
 systemctl mask userconfig
-systemctl enable wayvnc
 systemctl --quiet set-default graphical.target
 sed /etc/lightdm/lightdm.conf -i -e "s/^\(#\|\)autologin-user=.*/autologin-user=$FIRST_USER_NAME/"
 sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?user-session.*/user-session=LXDE-pi-labwc/"
@@ -87,6 +87,15 @@ sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?greeter-session.*/greeter-session=pi
 sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-test.*/#fallback-test=/"
 sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-session.*/#fallback-session=/"
 sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-greeter.*/#fallback-greeter=/"
+mkdir -p /etc/systemd/system/getty@tty1.service.d
+cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF2
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin $FIRST_USER_NAME --noclear %I \$TERM
+EOF2
+systemctl disable vncserver-x11-serviced.service
+systemctl stop vncserver-x11-serviced.service
+systemctl enable wayvnc.service
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
 rm -rf /tmp/*

@@ -248,7 +248,7 @@ jobs:
           pubkey-ssh-first-user: ""
           release: bookworm
           setfcap: ""
-          stage-list: stage0 stage1 stage2 stage3 ./stage4 ./stageT
+          stage-list: stage0 stage1 stage2 stage3 ./stage4T ./stageT
           timezone: Europe/London
           username: tahti
           verbose-output: true
