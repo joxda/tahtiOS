@@ -209,7 +209,6 @@ jobs:
         run: |
           sudo chmod +x stageT/prerun.sh
           sudo chmod +x stageT/01-*/0?-*.sh
-          mkdir stageT/01-tahti-setup/files
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@v1.3.1
       - name: Download custom data files
@@ -230,7 +229,7 @@ jobs:
           enable-noobs: false
           enable-ssh: 1
           export-last-stage-only: true
-          extra-host-dependencies: ""
+          extra-host-dependencies: "git"
           extra-host-modules: ""
           github-token: ${{ github.token }}
           hostname: tahti
@@ -278,7 +277,6 @@ jobs:
         uses: ./.github/actions/packageImage
         with:
           image_path: "${{ steps.pigenimage.outputs.image-path }}"
-          zip_path: "${{ github.workspace }}/build/"
       - name: Export zip name and URL to env
         run: |
           ls 

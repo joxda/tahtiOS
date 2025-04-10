@@ -2,14 +2,13 @@
 set -ex
 echo "ROOTFS_DIR is set to: $ROOTFS_DIR"
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
-install -v -d "${ROOTFS_DIR}/var/log/nginx"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
-ls $ROOTFS_DIR/usr/local/
+install -m 644 -D files/autologin.conf "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d"
+install -m 644 -D files/rc.xml "${ROOTFS_DIR}/home/tahti/.config/labwc/"
+install -m 644 -D files/themerc-override "${ROOTFS_DIR}/home/tahti/.config/labwc/"
+install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/LXDE-pi/"
 on_chroot <<EOF
-install -v -d "${ROOTFS_DIR}/usr/local/tahti"
-install -v -d "${ROOTFS_DIR}/var/log/nginx"
-mkdir -p /var/log/nginx
 cd /usr/local/tahti
 echo *.tar.gz
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
@@ -19,22 +18,12 @@ echo "TAR indi-lib"
 tar xzvf indi-lib-*-Linux.tar.gz  -C /usr/
 echo "TAR indi-3rd"
 tar xzvf indi-3rd*-*-Linux.tar.gz  -C /usr/
-#echo "TAR indi Devel"
-#tar xzvf indi-v*-Linux-Devel.tar.gz  -C /usr/
-#echo "TAR indi Unspec"
-#tar xzvf indi-v*-Linux.tar.gz  -C /usr/
 dpkg -i --force-overwrite ./indi-*-Linux.deb
 echo "TAR libXISF"
 tar xzvf libXISF-*-Linux.tar.gz  -C /usr/
 git clone https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
-#echo "cmake_minimum_required(VERSION 3.0)" > CMakeLists.txt
-#echo "project(TempProject)" >> CMakeLists.txt
-#echo "find_package(USB1 REQUIRED)" >> CMakeLists.txt
-#cmake . -LA | grep USB1
 chmod +x *.sh
-#bash build-fxload.sh
-#./build-soft.sh #phd2
 SUDO_USER="${FIRST_USER_NAME}" ./build-more.sh
 SUDO_USER="${FIRST_USER_NAME}" ./installPythonRelated.sh
 ./extra-setup.sh
@@ -87,17 +76,12 @@ sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?greeter-session.*/greeter-session=pi
 sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-test.*/#fallback-test=/"
 sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-session.*/#fallback-session=/"
 sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-greeter.*/#fallback-greeter=/"
-mkdir -p /etc/systemd/system/getty@tty1.service.d
-cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF2
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty --autologin $FIRST_USER_NAME --noclear %I \$TERM
-EOF2
 systemctl disable vncserver-x11-serviced.service
 systemctl stop vncserver-x11-serviced.service
 systemctl enable wayvnc.service
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
+install -v -d "/var/log/nginx"
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean
