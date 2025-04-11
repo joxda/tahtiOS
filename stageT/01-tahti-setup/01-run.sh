@@ -83,10 +83,13 @@ rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
 install -v -d "/var/log/nginx"
 chown -R tahti:tahti /usr/local/tahti
+chown -R tahti:tahti /home/tahti/.config
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean
 rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
+sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/gtk-theme "'PiXnoir'"
+sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/font-name "'Piboto Condensed Regular'"
 EOF
 rm files/*
