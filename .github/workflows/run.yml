@@ -211,6 +211,10 @@ jobs:
           sudo chmod +x stageT/01-*/0?-*.sh
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@v1.3.1
+      - uses: thejerrybao/setup-swap-space@v1
+        with:
+          swap-size-gb: 8
+          remove-existing-swap-files: true
       - name: Download custom data files
         uses: actions/download-artifact@v4
         with:
