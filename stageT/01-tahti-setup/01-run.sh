@@ -92,4 +92,4 @@ rm /usr/local/tahti/*deb
 sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/gtk-theme "'PiXnoir'"
 sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/font-name "'Piboto Condensed Regular'"
 EOF
-rm files/*
+#rm files/*
