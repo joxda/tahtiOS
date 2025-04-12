@@ -233,7 +233,7 @@ jobs:
           enable-noobs: false
           enable-ssh: 1
           export-last-stage-only: true
-          extra-host-dependencies: "git"
+          extra-host-dependencies: "git lsof psmisc"
           extra-host-modules: ""
           github-token: ${{ github.token }}
           hostname: tahti
