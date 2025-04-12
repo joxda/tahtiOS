@@ -89,12 +89,10 @@ rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean
 rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
-sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/gtk-theme "'PiXnoir'"
-sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/font-name "'Piboto Condensed Regular'"
+#sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/gtk-theme "'PiXnoir'"
+#sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/font-name "'Piboto Condensed Regular'"
 EOF
 rm files/*
-sleep 15
-fuser -k "${ROOTFS_DIR}" || true
-lsof +D "${ROOTFS_DIR}" || true
+
 
 
