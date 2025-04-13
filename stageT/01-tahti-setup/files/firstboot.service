@@ -1,0 +1,12 @@
+[Unit]
+Description=First Boot Script
+After=network.target
+Before=graphical.target
+
+[Service]
+Tzpe=oneshot
+ExecStart=/usr/local/tahti/firstboot.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.tar+

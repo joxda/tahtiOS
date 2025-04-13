@@ -8,6 +8,8 @@ install -m 644 -D files/autologin.conf "${ROOTFS_DIR}/etc/systemd/system/getty@t
 install -m 644 -D files/rc.xml "${ROOTFS_DIR}/home/tahti/.config/labwc/rc.xml"
 install -m 644 -D files/themerc-override "${ROOTFS_DIR}/home/tahti/.config/labwc/themerc-override"
 install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/LXDE-pi/desktop-items-NOOP-1.conf"
+install -m 755 files/*sh "${ROOTFS_DIR}/usr/local/tahti/"
+install -m 644 files/firstboot.service "${ROOTFS_DIR}/etc/systemd/system/"
 on_chroot <<EOF
 cd /usr/local/tahti
 echo *.tar.gz
@@ -79,6 +81,7 @@ sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-greeter.*/#fallback-greeter=/"
 systemctl disable vncserver-x11-serviced.service
 systemctl stop vncserver-x11-serviced.service
 systemctl enable wayvnc.service
+systemctl enable firstboot.service
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
 install -v -d "/var/log/nginx"
@@ -89,10 +92,5 @@ rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean
 rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
-#sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/gtk-theme "'PiXnoir'"
-#sudo -u tahti dbus-launch dconf write /org/gnome/desktop/interface/font-name "'Piboto Condensed Regular'"
 EOF
 rm files/*
-
-
-
