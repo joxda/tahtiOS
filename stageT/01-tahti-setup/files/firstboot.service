@@ -9,4 +9,4 @@ ExecStart=/usr/local/tahti/firstboot.sh
 RemainAfterExit=true
 
 [Install]
-WantedBy=multi-user.tar+
+WantedBy=multi-user.target
