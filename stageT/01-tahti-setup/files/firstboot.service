@@ -4,7 +4,8 @@ After=network.target
 Before=graphical.target
 
 [Service]
-Tzpe=oneshot
+Type=oneshot
+User=root
 ExecStart=/usr/local/tahti/firstboot.sh
 RemainAfterExit=true
 
