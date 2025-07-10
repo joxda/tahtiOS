@@ -75,7 +75,7 @@ jobs:
             mv new_releases.json latest_releases.json            
           fi
   compile:
-    if: github.event_name == 'push' || steps.check.needs_update == 'true'
+    if: github.event_name == 'push' || needs.check.needs_update == 'true'
     needs: check
     runs-on: ubuntu-24.04-arm # Use native ARM64 runner
     steps:
@@ -199,7 +199,7 @@ jobs:
             ${{ github.workspace }}/*tar.gz
             ${{ github.workspace }}/*deb
   dothings:
-    if: github.event_name == 'push' || steps.check.needs_update == 'true'
+    if: github.event_name == 'push' || needs.check.needs_update == 'true'
     name: Print the result from check
     runs-on: ubuntu-latest
     timeout-minutes: 1200
