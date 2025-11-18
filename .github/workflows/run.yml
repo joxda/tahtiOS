@@ -235,7 +235,7 @@ jobs:
           enable-noobs: false
           enable-ssh: 1
           export-last-stage-only: true
-          extra-host-dependencies: "git lsof psmisc"
+          extra-host-dependencies: "git lsof psmisc debian-archive-keyring"
           extra-host-modules: ""
           github-token: ${{ github.token }}
           hostname: tahti
