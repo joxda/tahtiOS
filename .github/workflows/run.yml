@@ -251,7 +251,7 @@ jobs:
           pi-gen-version: arm64
           pubkey-only-ssh: 0
           pubkey-ssh-first-user: ""
-          release: bookworm
+          release: trixie
           setfcap: ""
           stage-list: stage0 stage1 stage2 stage3 ./stage4T ./stageT
           timezone: Europe/London
