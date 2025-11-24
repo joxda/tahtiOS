@@ -63,7 +63,7 @@ gpsd
 gpsd-clients
 python3-gps
 pps-tools
-ntp
+openntpd ntpsec
 dnsutils
 swig
 websockify
