@@ -97,7 +97,7 @@ jobs:
             apt update &&
             apt-get install -y \
             git \
-            libudev-devel \
+            libudev-dev \
             cdbs \
             dkms \
             cmake \
