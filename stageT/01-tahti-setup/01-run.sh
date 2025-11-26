@@ -80,7 +80,7 @@ sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-session.*/#fallback-session=/"
 sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-greeter.*/#fallback-greeter=/"
 systemctl disable vncserver-x11-serviced.service
 systemctl stop vncserver-x11-serviced.service
-systemctl enable wayvnc.service
+#systemctl enable wayvnc.service
 systemctl enable firstboot.service
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
