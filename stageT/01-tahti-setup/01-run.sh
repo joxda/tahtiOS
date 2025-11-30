@@ -4,10 +4,10 @@ echo "ROOTFS_DIR is set to: $ROOTFS_DIR"
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
-install -m 644 -D files/autologin.conf "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d/autologin.conf"
-install -m 644 -D files/rc.xml "${ROOTFS_DIR}/home/tahti/.config/labwc/rc.xml"
-install -m 644 -D files/themerc-override "${ROOTFS_DIR}/home/tahti/.config/labwc/themerc-override"
-install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/LXDE-pi/desktop-items-NOOP-1.conf"
+#install -m 644 -D files/autologin.conf "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d/autologin.conf"
+#install -m 644 -D files/rc.xml "${ROOTFS_DIR}/home/tahti/.config/labwc/rc.xml"
+#install -m 644 -D files/themerc-override "${ROOTFS_DIR}/home/tahti/.config/labwc/themerc-override"
+#install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/LXDE-pi/desktop-items-NOOP-1.conf"
 install -m 755 files/*sh "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/firstboot.service "${ROOTFS_DIR}/etc/systemd/system/"
 on_chroot <<EOF
@@ -71,13 +71,13 @@ cd ..
 systemctl disable userconfig
 systemctl mask userconfig
 systemctl --quiet set-default graphical.target
-sed /etc/lightdm/lightdm.conf -i -e "s/^\(#\|\)autologin-user=.*/autologin-user=$FIRST_USER_NAME/"
-sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?user-session.*/user-session=LXDE-pi-labwc/"
-sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?autologin-session.*/autologin-session=LXDE-pi-labwc/"
-sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?greeter-session.*/greeter-session=pi-greeter-labwc/"
-sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-test.*/#fallback-test=/"
-sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-session.*/#fallback-session=/"
-sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-greeter.*/#fallback-greeter=/"
+#sed /etc/lightdm/lightdm.conf -i -e "s/^\(#\|\)autologin-user=.*/autologin-user=$FIRST_USER_NAME/"
+#sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?user-session.*/user-session=LXDE-pi-labwc/"
+#sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?autologin-session.*/autologin-session=LXDE-pi-labwc/"
+#sed /etc/lightdm/lightdm.conf -i -e "s/^#\\?greeter-session.*/greeter-session=pi-greeter-labwc/"
+#sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-test.*/#fallback-test=/"
+#sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-session.*/#fallback-session=/"
+#sed /etc/lightdm/lightdm.conf -i -e "s/^fallback-greeter.*/#fallback-greeter=/"
 systemctl disable vncserver-x11-serviced.service
 systemctl stop vncserver-x11-serviced.service
 systemctl enable wayvnc.service
