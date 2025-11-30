@@ -89,11 +89,11 @@ jobs:
 
       - name: Pull Raspberry Pi OS Bookworm Docker
         run: |
-          docker pull dtcooper/raspberrypi-os:latest
+          docker pull arm64v8/debian:trixie-slim
 
       - name: Build inside Docker
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace dtcooper/raspberrypi-os:latest bash -c "
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace arm64v8/debian:trixie-slim bash -c "
             apt update &&
             apt-get install -y \
             git \
