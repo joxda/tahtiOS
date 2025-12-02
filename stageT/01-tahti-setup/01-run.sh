@@ -10,6 +10,8 @@ install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 #install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/LXDE-pi/desktop-items-NOOP-1.conf"
 install -m 755 files/*sh "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/firstboot.service "${ROOTFS_DIR}/etc/systemd/system/"
+install -v -d "${ROOTFS_DIR}/home/tahti/.config/labwc/"
+install -m 644 files/labwc.xml "${ROOTFS_DIR}/home/tahti/.config/labwc/labwc.xml"
 on_chroot <<EOF
 cd /usr/local/tahti
 echo *.tar.gz

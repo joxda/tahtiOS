@@ -6,7 +6,7 @@ Before=graphical.target
 [Service]
 Type=oneshot
 User=root
-ExecStart=/usr/local/tahti/firstboot.sh
+ExecStart=/usr/local/tahti/firstBoot.sh
 RemainAfterExit=true
 
 [Install]
