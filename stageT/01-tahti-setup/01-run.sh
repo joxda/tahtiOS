@@ -94,5 +94,6 @@ rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean
 rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
+passwd -e tahti
 EOF
 rm files/*
