@@ -171,7 +171,7 @@ jobs:
             make -j$(nproc) &&
             make install &&
             cpack -G TGZ &&
-            tar czvf xmls.tgz /usr/share/indi/
+            tar czvf xmls.tar.gz /usr/share/indi/
             cp *tar.gz /workspace
             cd ../.. &&
             git clone https://github.com/rlancaste/stellarsolver.git &&
