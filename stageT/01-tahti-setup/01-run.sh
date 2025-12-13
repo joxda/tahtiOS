@@ -7,7 +7,7 @@ install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 #install -m 644 -D files/autologin.conf "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d/autologin.conf"
 install -m 644 -D files/rc.xml "${ROOTFS_DIR}/home/tahti/rc.xml"
 install -m 644 -D files/themerc-override "${ROOTFS_DIR}/home/tahti/themerc-override"
-install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/desktop-items-NOOP-1.conf"
+install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/default/desktop-items-NOOP-1.conf"
 install -m 755 files/*sh "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/firstboot.service "${ROOTFS_DIR}/etc/systemd/system/"
 install -v -d "${ROOTFS_DIR}/home/tahti/.config/labwc/"
@@ -20,8 +20,8 @@ echo "TAR StellarSolver"
 tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
 echo "TAR indi-lib"
 tar xzvf indi-lib-*-Linux.tar.gz  -C /usr/
-echo "TAR indi-3rd"
-tar xzvf indi-3rd*-*-Linux.tar.gz  -C /usr/
+#echo "TAR indi-3rd"
+#tar xzvf indi-3rd*-*-Linux.tar.gz  -C /usr/
 dpkg -i --force-overwrite ./indi-*-Linux.deb
 echo "TAR libXISF"
 tar xzvf libXISF-*-Linux.tar.gz  -C /usr/
