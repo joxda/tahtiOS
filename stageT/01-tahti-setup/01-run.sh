@@ -18,8 +18,8 @@ echo *.tar.gz
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
 echo "TAR StellarSolver"
 tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
-echo "TAR indi-lib"
-tar xzvf indi-lib-*-Linux.tar.gz  -C /usr/
+#echo "TAR indi-lib"
+#tar xzvf indi-lib-*-Linux.tar.gz  -C /usr/
 #echo "TAR indi-3rd"
 #tar xzvf indi-3rd*-*-Linux.tar.gz  -C /usr/
 dpkg -i --force-overwrite ./indi-*-Linux.deb
@@ -92,7 +92,7 @@ chown -R tahti:tahti /home/tahti/.config
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean
-rm /usr/local/tahti/*gz
+#rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
 EOF
 rm files/*

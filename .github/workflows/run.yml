@@ -161,10 +161,10 @@ jobs:
             mkdir -p indi-3rdparty/build && cd indi-3rdparty/build &&
             pwd && ls && ls .. &&
             echo 'include(CPack)' >> ../CMakeLists.txt &&
-            cmake  -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF -DCMAKE_INSTALL_PREFIX=/usr -DINDI_DATA_DIR=/usr/share/indi -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
+            cmake -DCPACK_MONOLITHIC_INSTALL=ON  -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF -DCMAKE_INSTALL_PREFIX=/usr -DINDI_DATA_DIR=/usr/share/indi -DBUILD_LIBS=1 -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-lib -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
             make -j$(nproc) &&
             make install &&
-            cpack -G TGZ &&
+            cpack -G DEB -DCPACK_MONOLITHIC_INSTALL=ON  &&
             cp *tar.gz /workspace
             mkdir ../build2 && cd ../build2 &&
             cmake  -DCPACK_MONOLITHIC_INSTALL=ON -DCPACK_INCLUDE_TOPLEVEL_DIRECTORY=OFF -DCMAKE_INSTALL_PREFIX=/usr -DINDI_DATA_DIR=/usr/share/indi -DCMAKE_BUILD_TYPE=Release -DCPACK_GENERATOR=TGZ -DCPACK_PACKAGE_NAME=indi-3rd-party -DCPACK_PACKAGE_VERSION=${{ needs.check.outputs.versionINDI3rdPARTY }} -DCPACK_PACKAGE_CONTACT="joxda@github" .. &&
@@ -173,6 +173,7 @@ jobs:
             cpack -G DEB -DCPACK_MONOLITHIC_INSTALL=ON  &&
             cp *deb /workspace
             tar czvf xmls.tar.gz /usr/share/indi/
+            tar czvf rules.tar.gz /lib/udev/rules.d/
             cp *tar.gz /workspace
             cd ../.. &&
             git clone https://github.com/rlancaste/stellarsolver.git &&
