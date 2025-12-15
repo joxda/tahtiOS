@@ -13,8 +13,9 @@ sudo ufw allow ssh
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 
-#sudo ufw enable
+sudo /usr/local/tahti/createSSLcertificate.sh
 
-systemctl disable firstboot.service
-
+sudo ufw enable
+sudo systemctl start ufw
+sudo systemctl disable firstboot.service
 #rm -- "$0"
