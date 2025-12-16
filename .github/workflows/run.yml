@@ -247,7 +247,7 @@ jobs:
           github-token: ${{ github.token }}
           hostname: tahti
           image-name: "tahtiOS"
-          increase-runner-disk-size: false
+          increase-runner-disk-size: true
           keyboard-keymap: gb
           keyboard-layout: English (UK)
           locale: en_GB.UTF-8
