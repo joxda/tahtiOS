@@ -5,13 +5,13 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 #install -m 644 -D files/autologin.conf "${ROOTFS_DIR}/etc/systemd/system/getty@tty1.service.d/autologin.conf"
-install -m 644 -D files/rc.xml "${ROOTFS_DIR}/home/tahti/rc.xml"
-install -m 644 -D files/themerc-override "${ROOTFS_DIR}/home/tahti/themerc-override"
+#install -m 644 -D files/rc.xml "${ROOTFS_DIR}/home/tahti/rc.xml"
+#install -m 644 -D files/themerc-override "${ROOTFS_DIR}/home/tahti/themerc-override"
 install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/default/desktop-items-NOOP-1.conf"
 install -m 755 files/*sh "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/firstboot.service "${ROOTFS_DIR}/etc/systemd/system/"
-install -v -d "${ROOTFS_DIR}/home/tahti/.config/labwc/"
-install -m 644 files/labwc.xml "${ROOTFS_DIR}/home/tahti/.config/labwc/labwc.xml"
+#install -v -d "${ROOTFS_DIR}/home/tahti/.config/labwc/"
+#install -m 644 files/labwc.xml "${ROOTFS_DIR}/home/tahti/.config/labwc/labwc.xml"
 on_chroot <<EOF
 cd /usr/local/tahti
 echo *.tar.gz
@@ -92,7 +92,7 @@ chown -R tahti:tahti /home/tahti/.config
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean
-#rm /usr/local/tahti/*gz
+rm /usr/local/tahti/*gz
 rm /usr/local/tahti/*deb
 EOF
 rm files/*
