@@ -173,9 +173,6 @@ jobs:
             make install &&
             cpack -G DEB -DCPACK_MONOLITHIC_INSTALL=ON  &&
             cp *deb /workspace
-            tar czvf xmls.tar.gz /usr/share/indi/
-            tar czvf rules.tar.gz /lib/udev/rules.d/
-            cp *tar.gz /workspace
             cd ../.. &&
             git clone https://github.com/rlancaste/stellarsolver.git &&
             git fetch --tags &&
