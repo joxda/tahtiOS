@@ -1,0 +1,22 @@
+write_files:
+  - path: /usr/local/tahti/setup-cert.sh
+    permissions: '0755'
+    owner: root:root
+    content: |
+      #!/bin/bash
+      CERT_DIR="/usr/local/tahti"
+
+          openssl req -x509 -nodes -newkey rsa:4096 \
+              -keyout "$CERT_DIR/rootCA.key" \
+              -out "$CERT_DIR/rootCA.pem" \
+              -days 3650 \
+              -subj "/C=US/ST=State/L=City/O=Company/CN=Tahti-Root-CA/emailAddress=admin@tahti.local"
+      
+      openssl req -newkey rsa:4096 -nodes -keyout "$CERT_DIR/key.pem" -out "$CERT_DIR/server.csr" \
+          -subj "/C=US/ST=State/L=City/O=Company/CN=tahti.local/emailAddress=admin@tahti.local"
+
+      openssl x509 -req -in "$CERT_DIR/server.csr" -CA "$CERT_DIR/rootCA.pem" -CAkey "$CERT_DIR/rootCA.key" \
+          -CAcreateserial -out "$CERT_DIR/self.pem" -days 3650
+
+runcmd:
+  - bash /usr/local/tahti/setup-cert.sh
