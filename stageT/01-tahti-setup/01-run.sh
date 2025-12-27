@@ -1,6 +1,7 @@
 #!/bin/bash
 set -ex
 echo "ROOTFS_DIR is set to: $ROOTFS_DIR"
+install -m 644 -D files/user-data "${ROOTFS_DIR}/boot/user-data"
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
