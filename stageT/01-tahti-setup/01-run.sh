@@ -90,12 +90,6 @@ rm -rf /var/log/*
 install -v -d "/var/log/nginx"
 chown -R tahti:tahti /usr/local/tahti
 chown -R tahti:tahti /home/tahti/.config
-ufw default deny incoming
-ufw default allow outgoing
-ufw allow 80,443/tcp
-ufw allow 7624/tcp
-ufw allow ssh
-ufw allow "Nginx Full"
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean
