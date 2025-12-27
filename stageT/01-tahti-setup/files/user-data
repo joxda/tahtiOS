@@ -4,6 +4,7 @@ write_files:
     owner: root:root
     content: |
       #!/bin/bash
+      ufw --force enable
       CERT_DIR="/usr/local/tahti"
 
           openssl req -x509 -nodes -newkey rsa:4096 \

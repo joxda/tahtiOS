@@ -96,7 +96,6 @@ ufw allow 80,443/tcp
 ufw allow 7624/tcp
 ufw allow ssh
 ufw allow "Nginx Full"
-ufw --force enable
 rm -rf /tmp/*
 rm -rf /var/tmp/*
 apt-get -y autoremove && apt-get -y clean

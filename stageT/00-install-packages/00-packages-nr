@@ -76,5 +76,3 @@ libwxgtk3.2-dev #(phd2)
 iptables
 libzmq3-dev
 xcalib
-mkcert 
-libnss3-tools
