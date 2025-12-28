@@ -1,3 +1,12 @@
+#cloud-config
+#users:
+#  - name: tahti
+#    ssh_authorized_keys:
+#      - ssh-ed25519 your_key_here
+#    lock_passwd: false
+
+
+
 write_files:
   - path: /usr/local/tahti/setup-cert.sh
     permissions: '0755'
@@ -5,15 +14,15 @@ write_files:
     content: |
       #!/bin/bash
       ufw default deny incoming
-ufw default allow outgoing
-ufw allow 80,443/tcp
-ufw allow 7624/tcp
-ufw allow ssh
-ufw allow "Nginx Full"
+      ufw default allow outgoing
+      ufw allow 80,443/tcp
+      ufw allow 7624/tcp
+      ufw allow ssh
+      ufw allow "Nginx Full"
       ufw --force enable
       CERT_DIR="/usr/local/tahti"
 
-          openssl req -x509 -nodes -newkey rsa:4096 \
+      openssl req -x509 -nodes -newkey rsa:4096 \
               -keyout "$CERT_DIR/rootCA.key" \
               -out "$CERT_DIR/rootCA.pem" \
               -days 3650 \
