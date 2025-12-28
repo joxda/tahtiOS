@@ -31,7 +31,7 @@ cd astro-soft-build
 chmod +x *.sh
 SUDO_USER="${FIRST_USER_NAME}" ./build-more.sh
 SUDO_USER="${FIRST_USER_NAME}" ./installPythonRelated.sh
-./extra-setup.sh
+SUDO_USER="${FIRST_USER_NAME}" ./extra-setup.sh
 cd /usr/share
 git clone --branch v1.6.0 --depth 1 https://github.com/novnc/noVNC.git
 cd /usr/local/tahti/repos/
@@ -84,7 +84,6 @@ systemctl --quiet set-default graphical.target
 systemctl disable vncserver-x11-serviced.service
 systemctl stop vncserver-x11-serviced.service
 systemctl enable wayvnc.service
-systemctl enable firstboot.service
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
 install -v -d "/var/log/nginx"
