@@ -79,4 +79,5 @@ xcalib
 network-manager
 freeradius 
 freeradius-utils 
+libpam-radius-auth
 hostapd

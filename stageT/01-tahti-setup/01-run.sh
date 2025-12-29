@@ -71,6 +71,7 @@ systemctl --quiet set-default graphical.target
 systemctl disable vncserver-x11-serviced.service
 systemctl stop vncserver-x11-serviced.service
 systemctl enable wayvnc.service
+systemctl enable NetworkManager
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
 install -v -d "/var/log/nginx"
