@@ -1,0 +1,11 @@
+[Unit]
+Description=Wi-Fi fallback AP (RADIUS + PAM)
+After=NetworkManager.service freeradius.service
+Wants=NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/tahti/wifi-fallback.sh
+
+[Install]
+WantedBy=multi-user.target

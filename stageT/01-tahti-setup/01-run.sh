@@ -7,6 +7,9 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/default/desktop-items-NOOP-1.conf"
+install -m 644 -D files/hostapd-radius.conf "${ROOTFS_DIR}/etc/hostapd/hostapd-radius.conf"
+install -m 755 -D files/wifi-fallback.sh "${ROOTFS_DIR}/usr/local/tahti/wifi-fallback.sh"
+install -m 644 -D files/wifi-fallback.service "${ROOTFS_DIR}/etc/systemd/system/wifi-fallback.service"
 on_chroot <<EOF
 cd /usr/local/tahti
 echo *.tar.gz
@@ -71,7 +74,19 @@ systemctl --quiet set-default graphical.target
 systemctl disable vncserver-x11-serviced.service
 systemctl stop vncserver-x11-serviced.service
 systemctl enable wayvnc.service
+
 systemctl enable NetworkManager
+systemctl disable hostapd
+systemctl mask hostapd
+echo "pam {\n    pam_auth = radius\n}" > /etc/freeradius/3.0/mods-enabled/pam
+echo "auth    required pam_unix.so\naccount required pam_unix.so" > /etc/pam.d/radius
+sed -i '/authorize {/a\    pam' /etc/freeradius/3.0/sites-enabled/default
+sed -i '/authenticate {/a\    pam' /etc/freeradius/3.0/sites-enabled/default
+echo "\nclient localhost {\n    ipaddr = 127.0.0.1\n    secret = radiussecret\n}" >> /etc/freeradius/3.0/clients.conf
+systemctl enable freeradius
+echo 'DAEMON_CONF="/etc/hostapd/hostapd-radius.conf"' > /etc/default/hostapd
+systemctl enable wifi-fallback.service
+
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*
 install -v -d "/var/log/nginx"
