@@ -1,8 +1,8 @@
 #!/bin/bash
 set -ex
 echo "ROOTFS_DIR is set to: $ROOTFS_DIR"
-install -m 644 -D files/user-data "${ROOTFS_DIR}/boot/user-data"
-install -m 644 -D files/network-config "${ROOTFS_DIR}/boot/network-config"
+install -m 644 -D files/user-data "${ROOTFS_DIR}/boot/firmware/user-data"
+install -m 644 -D files/network-config "${ROOTFS_DIR}/boot/firmware/network-config"
 install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
