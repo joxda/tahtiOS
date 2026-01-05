@@ -1,0 +1,21 @@
+[connection]
+id=TahtiOS HotSpot
+type=wifi
+autoconnect=yes
+autoconnect-priority=-999
+permissions=
+
+[wifi]
+mode=ap
+ssid=TahtiOSwifi
+band=bg
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=TahtiOS
+
+[ipv4]
+method=shared
+
+[ipv6]
+method=ignore

@@ -7,9 +7,16 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/default/desktop-items-NOOP-1.conf"
-install -m 644 -D files/hostapd-radius.conf "${ROOTFS_DIR}/etc/hostapd/hostapd-radius.conf"
-install -m 755 -D files/wifi-fallback.sh "${ROOTFS_DIR}/usr/local/tahti/wifi-fallback.sh"
-install -m 644 -D files/wifi-fallback.service "${ROOTFS_DIR}/etc/systemd/system/wifi-fallback.service"
+install -m 644 -D files/nodogsplash.conf "${ROOTFS_DIR}/etc/nodogsplash/nodogsplash.conf"
+install -m 644 -D files/nodogsplashpam "${ROOTFS_DIR}/etc/pam.d/nodogsplash"
+install -m 644 -D files/splash.html "${ROOTFS_DIR}/etc/nodogsplash/htdocs/splash.html"
+install -m 755 -D files/login.sh "${ROOTFS_DIR}/etc/nodogsplash/htdocs/cgi-bin/login.sh"
+install -m 755 -D files/nds-auth.sh "${ROOTFS_DIR}/usr/local/tahti/nds-auth.sh"
+install -m 755 -D files/nodogsplashdispatcher.sh "${ROOTFS_DIR}/etc/NetworkManager/dispatcher.d/90-nodogsplash"
+install -m 644 -D files/wifi-powersave-off.conf "${ROOTFS_DIR}/etc/NetworkManager/conf.d/wifi-powersave-off.conf"
+install -m 644 -D files/wifi-enable-autohotspot.conf "${ROOTFS_DIR}/etc/NetworkManager/conf.d/wifi-enable-autohotspot.conf"
+install -m 600  -D files/HotSpot.nmconnection "${ROOTFS_DIR}/etc/NetworkManager/system-connections/HotSpot.nmconnection"
+
 on_chroot <<EOF
 cd /usr/local/tahti
 echo *.tar.gz
@@ -23,7 +30,7 @@ tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
 dpkg -i --force-overwrite ./indi-*-Linux.deb
 echo "TAR libXISF"
 tar xzvf libXISF-*-Linux.tar.gz  -C /usr/
-git clone https://github.com/joxda/astro-soft-build.git
+git clone --branch j3 https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
 chmod +x *.sh
 SUDO_USER="${FIRST_USER_NAME}" ./build-more.sh
@@ -76,16 +83,6 @@ systemctl stop vncserver-x11-serviced.service
 systemctl enable wayvnc.service
 
 systemctl enable NetworkManager
-systemctl disable hostapd
-systemctl mask hostapd
-echo "pam {\n    pam_auth = radius\n}" > /etc/freeradius/3.0/mods-enabled/pam
-echo "auth    required pam_unix.so\naccount required pam_unix.so" > /etc/pam.d/radius
-sed -i '/authorize {/a\    pam' /etc/freeradius/3.0/sites-enabled/default
-sed -i '/authenticate {/a\    pam' /etc/freeradius/3.0/sites-enabled/default
-echo "\nclient localhost {\n    ipaddr = 127.0.0.1\n    secret = radiussecret\n}" >> /etc/freeradius/3.0/clients.conf
-systemctl enable freeradius
-echo 'DAEMON_CONF="/etc/hostapd/hostapd-radius.conf"' > /etc/default/hostapd
-systemctl enable wifi-fallback.service
 
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*

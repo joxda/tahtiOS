@@ -77,7 +77,5 @@ iptables
 libzmq3-dev
 xcalib
 network-manager
-freeradius 
-freeradius-utils 
-libpam-radius-auth
-hostapd
+nodogsplash
+pamtester
