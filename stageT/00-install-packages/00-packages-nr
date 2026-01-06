@@ -77,5 +77,5 @@ iptables
 libzmq3-dev
 xcalib
 network-manager
-nodogsplash
+libmicrohttpd-dev
 pamtester

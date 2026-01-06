@@ -19,6 +19,8 @@ install -m 600  -D files/HotSpot.nmconnection "${ROOTFS_DIR}/etc/NetworkManager/
 
 on_chroot <<EOF
 cd /usr/local/tahti
+wget https://github.com/nodogsplash/nodogsplash/releases/download/v5.0.2/nodogsplash_5.0.2-1_amd64.deb
+apt install ./nodogsplash_5.0.2-1_amd64.deb
 echo *.tar.gz
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
 echo "TAR StellarSolver"
