@@ -1,18 +1,18 @@
 [connection]
-id=TahtiOS HotSpot
+id=TahtiOShotSpot
 type=wifi
 autoconnect=yes
 autoconnect-priority=-999
+interface-name=wlan0
 permissions=
 
 [wifi]
 mode=ap
 ssid=TahtiOSwifi
-band=bg
 
 [wifi-security]
 key-mgmt=wpa-psk
-psk=TahtiOS
+psk=TahtiOSwifi
 
 [ipv4]
 method=shared

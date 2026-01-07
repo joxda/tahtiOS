@@ -7,15 +7,15 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/default/desktop-items-NOOP-1.conf"
-install -m 644 -D files/nodogsplash.conf "${ROOTFS_DIR}/etc/nodogsplash/nodogsplash.conf"
 install -m 644 -D files/nodogsplashpam "${ROOTFS_DIR}/etc/pam.d/nodogsplash"
-install -m 644 -D files/splash.html "${ROOTFS_DIR}/etc/nodogsplash/htdocs/splash.html"
+install -m 644 -D files/nodogsplash.conf "${ROOTFS_DIR}/usr/local/tahti/nodogsplashstuff/nodogsplash.conf"
+install -m 644 -D files/splash.html "${ROOTFS_DIR}/usr/local/tahti/nodogsplashstuff/htdocs/splash.html"
 install -m 755 -D files/login.sh "${ROOTFS_DIR}/etc/nodogsplash/htdocs/cgi-bin/login.sh"
 install -m 755 -D files/nds-auth.sh "${ROOTFS_DIR}/usr/local/tahti/nds-auth.sh"
 install -m 755 -D files/nodogsplashdispatcher.sh "${ROOTFS_DIR}/etc/NetworkManager/dispatcher.d/90-nodogsplash"
 install -m 644 -D files/wifi-powersave-off.conf "${ROOTFS_DIR}/etc/NetworkManager/conf.d/wifi-powersave-off.conf"
 install -m 644 -D files/wifi-enable-autohotspot.conf "${ROOTFS_DIR}/etc/NetworkManager/conf.d/wifi-enable-autohotspot.conf"
-install -m 600  -D files/HotSpot.nmconnection "${ROOTFS_DIR}/etc/NetworkManager/system-connections/HotSpot.nmconnection"
+install -m 600 -D files/HotSpot.nmconnection "${ROOTFS_DIR}/etc/NetworkManager/system-connections/HotSpot.nmconnection"
 
 on_chroot <<EOF
 cd /usr/local/tahti
@@ -23,6 +23,11 @@ git clone --branch v5.0.2 --depth 1 https://github.com/nodogsplash/nodogsplash.g
 cd nodogsplash
 make
 make install
+cd ..
+mv /etc/nodogsplash/nodogsplash.conf /etc/nodogsplash/nodogsplash.bkp
+mv /etc/nodogsplash/htdocs/splash.html /etc/nodogsplash/htdocs/splash.html.bkp
+install -m 644 -D nodogsplashstuff/nodogsplash.conf "/etc/nodogsplash/nodogsplash.conf"
+install -m 644 -D nodogsplashstuff/htdocs/splash.html "/etc/nodogsplash/htdocs/splash.html"
 cd ..
 rm -rf nodogsplash
 echo *.tar.gz
