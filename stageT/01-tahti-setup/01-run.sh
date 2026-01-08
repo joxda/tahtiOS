@@ -31,6 +31,7 @@ install -m 644 -D nodogsplashstuff/htdocs/splash.html "/etc/nodogsplash/htdocs/s
 cd ..
 rm -rf nodogsplash
 echo *.tar.gz
+cd /usr/local/tahti
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
 echo "TAR StellarSolver"
 tar xzvf StellarSolver-*-Linux.tar.gz  -C /usr/
