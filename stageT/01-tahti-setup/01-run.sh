@@ -7,29 +7,15 @@ install -v -d "${ROOTFS_DIR}/usr/local/tahti"
 install -m 644 files/*tar.gz "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 files/*deb "${ROOTFS_DIR}/usr/local/tahti/"
 install -m 644 -D files/desktop-items-NOOP-1.conf "${ROOTFS_DIR}/home/tahti/.config/pcmanfm/default/desktop-items-NOOP-1.conf"
-install -m 644 -D files/nodogsplashpam "${ROOTFS_DIR}/etc/pam.d/nodogsplash"
-install -m 644 -D files/nodogsplash.conf "${ROOTFS_DIR}/usr/local/tahti/nodogsplashstuff/nodogsplash.conf"
-install -m 644 -D files/splash.html "${ROOTFS_DIR}/usr/local/tahti/nodogsplashstuff/htdocs/splash.html"
-install -m 755 -D files/login.sh "${ROOTFS_DIR}/etc/nodogsplash/htdocs/cgi-bin/login.sh"
-install -m 755 -D files/nds-auth.sh "${ROOTFS_DIR}/usr/local/tahti/nds-auth.sh"
-install -m 755 -D files/nodogsplashdispatcher.sh "${ROOTFS_DIR}/etc/NetworkManager/dispatcher.d/90-nodogsplash"
 install -m 644 -D files/wifi-powersave-off.conf "${ROOTFS_DIR}/etc/NetworkManager/conf.d/wifi-powersave-off.conf"
 install -m 644 -D files/wifi-enable-autohotspot.conf "${ROOTFS_DIR}/etc/NetworkManager/conf.d/wifi-enable-autohotspot.conf"
 install -m 600 -D files/HotSpot.nmconnection "${ROOTFS_DIR}/etc/NetworkManager/system-connections/HotSpot.nmconnection"
+install -m 644 -D files/nftables.conf "${ROOTFS_DIR}/etc/nftables.conf"
+install -m 644 -D files/fail2ban-filter.conf "${ROOTFS_DIR}/etc/fail2ban/filter.d/fail2ban-filter.conf"
+install -m 644 -D files/fail2ban-jail.conf "${ROOTFS_DIR}/etc/fail2ban/jail.d/fail3ban-jail.conf"
 
 on_chroot <<EOF
 cd /usr/local/tahti
-git clone --branch v5.0.2 --depth 1 https://github.com/nodogsplash/nodogsplash.git
-cd nodogsplash
-make
-make install
-cd ..
-mv /etc/nodogsplash/nodogsplash.conf /etc/nodogsplash/nodogsplash.bkp
-mv /etc/nodogsplash/htdocs/splash.html /etc/nodogsplash/htdocs/splash.html.bkp
-install -m 644 -D nodogsplashstuff/nodogsplash.conf "/etc/nodogsplash/nodogsplash.conf"
-install -m 644 -D nodogsplashstuff/htdocs/splash.html "/etc/nodogsplash/htdocs/splash.html"
-cd ..
-rm -rf nodogsplash
 echo *.tar.gz
 cd /usr/local/tahti
 tar xzvf KStars-stable-*-Linux.tar.gz -C /usr/
@@ -44,7 +30,7 @@ echo "TAR libXISF"
 tar xzvf libXISF-*-Linux.tar.gz  -C /usr/
 git clone --branch j3 https://github.com/joxda/astro-soft-build.git
 cd astro-soft-build
-chmod +x *.sh
+chmod u+x *.sh
 SUDO_USER="${FIRST_USER_NAME}" ./build-more.sh
 SUDO_USER="${FIRST_USER_NAME}" ./installPythonRelated.sh
 SUDO_USER="${FIRST_USER_NAME}" ./extra-setup.sh
@@ -95,6 +81,8 @@ systemctl stop vncserver-x11-serviced.service
 systemctl enable wayvnc.service
 
 systemctl enable NetworkManager
+systemctl enable nftables
+systemctl enable fail2ban
 
 rm -f /etc/nginx/sites-enabled/default
 rm -rf /var/log/*

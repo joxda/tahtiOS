@@ -1,0 +1,8 @@
+
+[portal-pam]
+enabled = true
+filter  = portal-pam
+port    = https
+logpath = /var/log/auth.log
+maxretry = 5
+bantime  = 1h

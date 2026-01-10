@@ -33,6 +33,8 @@ write_files:
 
       openssl x509 -req -in "$CERT_DIR/server.csr" -CA "$CERT_DIR/rootCA.pem" -CAkey "$CERT_DIR/rootCA.key" \
           -CAcreateserial -out "$CERT_DIR/self.pem" -days 3650
+          
+      systemctl restart nginx
 
 runcmd:
   - bash /usr/local/tahti/setup-cert.sh
