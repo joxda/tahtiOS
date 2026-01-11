@@ -12,7 +12,7 @@ install -m 644 -D files/wifi-enable-autohotspot.conf "${ROOTFS_DIR}/etc/NetworkM
 install -m 600 -D files/HotSpot.nmconnection "${ROOTFS_DIR}/etc/NetworkManager/system-connections/HotSpot.nmconnection"
 install -m 644 -D files/nftables.conf "${ROOTFS_DIR}/etc/nftables.conf"
 install -m 644 -D files/fail2ban-filter.conf "${ROOTFS_DIR}/etc/fail2ban/filter.d/fail2ban-filter.conf"
-install -m 644 -D files/fail2ban-jail.conf "${ROOTFS_DIR}/etc/fail2ban/jail.d/fail3ban-jail.conf"
+install -m 644 -D files/fail2ban-jail.local "${ROOTFS_DIR}/etc/fail2ban/jail.d/fail2ban-jail.local"
 
 on_chroot <<EOF
 cd /usr/local/tahti
