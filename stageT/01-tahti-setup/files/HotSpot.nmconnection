@@ -9,10 +9,16 @@ permissions=
 [wifi]
 mode=ap
 ssid=TahtiOSwifi
+band=bg
+channel=6
+
 
 [wifi-security]
 key-mgmt=wpa-psk
-psk=TahtiOSwifi
+proto=rsn
+pairwise=ccmp
+group=ccmp
+psk=SomePasssword123
 
 [ipv4]
 method=shared
